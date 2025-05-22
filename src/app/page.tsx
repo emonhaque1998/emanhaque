@@ -12,7 +12,8 @@ export default function Home() {
   };
   return (
     <div className="container mx-auto relative">
-      <header className="bg-[#fcfcfe] dark:bg-[#00283a] rounded-xl sticky top-5 z-20">
+      <div className="h-8"></div>
+      <header className="bg-[#fcfcfe] dark:bg-[#00283a] rounded-xl sticky top-0 z-20">
         <div className="py-6 max-md:py-8 px-20 max-md:px-5">
           <div className="flex flex-row justify-between items-center">
             <div className="logo">
@@ -40,10 +41,11 @@ export default function Home() {
           </div>
         </div>
       </header>
-      <div className="dark:bg-[#00283a] w-1/3 sticky top-0">
+      <div className="h-24"></div>
+      <div className="dark:bg-[#00283a] w-1/3 z-30 sticky top-22 h-52 left-40">
         <h1>Eman H.</h1>
       </div>
-      <div className="px-10 -z-10 -mt-24">
+      <div className="px-10 w-full absolute top-0">
         <div className="relative h-screen bg-no-repeat z-10 bg-cover bg-[url(https://img.freepik.com/free-photo/green-park-view_1417-1494.jpg?semt=ais_hybrid&w=740)]">
           <div className="absolute inset-0 bg-black/50 -z-10"></div>
           <div className="flex flex-col items-center justify-center h-full z-40">
