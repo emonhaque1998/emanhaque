@@ -23,7 +23,7 @@ export default function MenuButtonForM({
             transition={{ duration: 0.2 }}
           >
             <IoMdClose
-              className="text-[#00283a] dark:text-white text-3xl"
+              className="text-[#00283a] dark:text-white text-3xl cursor-pointer"
               onClick={getMenuShowData}
             />
           </motion.div>
@@ -36,7 +36,7 @@ export default function MenuButtonForM({
             transition={{ duration: 0.2 }}
           >
             <IoMenu
-              className="text-[#00283a] dark:text-white text-3xl"
+              className="text-[#00283a] dark:text-white text-3xl cursor-pointer"
               onClick={getMenuShowData}
             />
           </motion.div>
