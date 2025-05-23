@@ -4,11 +4,13 @@ import Image from "next/image";
 import { useState } from "react";
 import HorizontalRowDotted from "./HorizontalRowDotted";
 import { FaLinkedin } from "react-icons/fa6";
+import Button from "./Button";
+import { MdEmail } from "react-icons/md";
 
 export default function MySelf() {
   const [showAbailable, setAvailable] = useState(false);
   return (
-    <div className="dark:bg-[#00283a] bg-white w-1/3 z-30 sticky max-md:hidden px-10 py-10 top-22 left-40 rounded-xl">
+    <div className="dark:bg-[#00283a] bg-white w-1/4 z-30 sticky max-md:hidden px-10 py-8 top-22 left-40 rounded-xl">
       <div className="flex flex-col">
         <div className="flex justify-center">
           <div className="justify-center relative inline-block">
@@ -66,6 +68,26 @@ export default function MySelf() {
           </div>
         </div>
         <HorizontalRowDotted />
+        <div className="flex flex-col gap-2">
+          <div className="flex flex-row justify-between">
+            <h2>Residence:</h2>
+            <h2>Bangladesh</h2>
+          </div>
+          <div className="flex flex-row justify-between">
+            <h2>City:</h2>
+            <h2>Manikganj</h2>
+          </div>
+          <div className="flex flex-row justify-between">
+            <h2>Age:</h2>
+            <h2>26</h2>
+          </div>
+        </div>
+        <HorizontalRowDotted />
+        <div className="flex justify-center">
+          <Button classProperty="w-2/3" text="Contact Me" outLine={true}>
+            <MdEmail />
+          </Button>
+        </div>
       </div>
     </div>
   );

@@ -4,6 +4,8 @@ import * as motion from "motion/react-client";
 import MenuButtonForM from "@/components/MenuBUttonForM";
 import MobileNavMenu from "@/components/MobileNavMenu";
 import { useState } from "react";
+import Button from "./Button";
+import { FaArrowDown } from "react-icons/fa";
 
 export default function Header() {
   const [showNavMenu, setNavMenu] = useState(false);
@@ -22,14 +24,9 @@ export default function Header() {
 
             <ModeToggle />
             <div className="max-md:hidden">
-              <motion.button
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.95 }}
-                transition={{ duration: 0.5 }}
-                className="text-white dark:bg-[#70ba65] bg-[#70ba65] px-5 py-2 rounded-full cursor-pointer"
-              >
-                Download Cv
-              </motion.button>
+              <Button text="Download CV">
+                <FaArrowDown />
+              </Button>
             </div>
             <MenuButtonForM
               getMenuShowData={navChangeHandler}
