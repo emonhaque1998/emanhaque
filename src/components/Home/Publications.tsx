@@ -1,0 +1,99 @@
+import Image from "next/image";
+import TitleHeader from "../TitleHeader";
+import HorizontalRowDotted from "../HorizontalRowDotted";
+
+export default function Publications() {
+  return (
+    <>
+      <div>
+        <div className="mt-5">
+          <TitleHeader
+            title="Latest Publications"
+            titleWidth="w-5/12"
+            secNumber={6}
+          />
+          <div className="mt-5 grid grid-cols-2 max-md:grid-cols-1 gap-3">
+            <div className="bg-white dark:bg-[#00283a] pb-5 w-full flex-col items-center gap-4 rounded-lg flex justify-center">
+              <div className="flex flex-col gap-5">
+                <div>
+                  <Image
+                    src="/assets/images/banner.jpg"
+                    width={500}
+                    height={0}
+                    alt="blog banner"
+                    className="w-full rounded-lg"
+                  />
+                </div>
+                <div className="px-10">
+                  <div className="flex flex-row gap-2">
+                    <span className="text-gray-500 uppercase">
+                      Design{" "}
+                      <span className="dark:text-white text-black">,</span>
+                    </span>
+                    <span className="text-gray-500 uppercase">
+                      Design{" "}
+                      <span className="dark:text-white text-black">,</span>
+                    </span>
+                  </div>
+                  <div>
+                    <h1 className="text-xl font-bold">
+                      Follow your own design process.
+                    </h1>
+                  </div>
+                  <HorizontalRowDotted />
+                  <div>
+                    <span className="text-gray-500">
+                      September 24, 2020 |{" "}
+                      <span className="text-red-600 dark:text-[#70ba65]">
+                        Admin
+                      </span>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="bg-white dark:bg-[#00283a] pb-5 w-full flex-col items-center gap-4 rounded-lg flex justify-center">
+              <div className="flex flex-col gap-5">
+                <div>
+                  <Image
+                    src="/assets/images/banner.jpg"
+                    width={500}
+                    height={0}
+                    alt="blog banner"
+                    className="w-full rounded-lg"
+                  />
+                </div>
+                <div className="px-10">
+                  <div className="flex flex-row gap-2">
+                    <span className="text-gray-500 uppercase">
+                      Design{" "}
+                      <span className="dark:text-white text-black">,</span>
+                    </span>
+                    <span className="text-gray-500 uppercase">
+                      Design{" "}
+                      <span className="dark:text-white text-black">,</span>
+                    </span>
+                  </div>
+                  <div>
+                    <h1 className="text-xl font-bold">
+                      Follow your own design process.
+                    </h1>
+                  </div>
+                  <HorizontalRowDotted />
+                  <div>
+                    <span className="text-gray-500">
+                      September 24, 2020 |{" "}
+                      <span className="text-red-600 dark:text-[#70ba65]">
+                        Admin
+                      </span>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+}
