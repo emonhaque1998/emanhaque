@@ -1,7 +1,7 @@
-export default function HorizontalRowDotted() {
+export default function HorizontalRowDotted({ padding }: { padding?: string }) {
   return (
-    <div className="py-5">
-      <div className="border-t-gray-500 border-dotted border-t "></div>
+    <div className={`${padding ? padding : "py-5"} w-full`}>
+      <div className="border-t-gray-500 border-dotted border-t border"></div>
     </div>
   );
 }
