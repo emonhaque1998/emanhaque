@@ -1,3 +1,4 @@
+import Footer from "@/components/Footer";
 import MyService from "@/components/Home/MyService";
 import MyStory from "@/components/Home/MyStory";
 import PricePlan from "@/components/Home/PricePlan";
@@ -18,6 +19,7 @@ export default function Home() {
       <Testimonials />
       <Publications />
       <HorizontalRowDotted />
+      <Footer />
     </>
   );
 }
