@@ -1,7 +1,9 @@
+import LanguageSkill from "@/components/About/LanguageSkill";
+
 export default function About() {
   return (
     <>
-      <h1>This is a about page</h1>
+      <LanguageSkill />
     </>
   );
 }
