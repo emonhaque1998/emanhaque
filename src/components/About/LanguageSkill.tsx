@@ -1,7 +1,9 @@
+import Knowladge from "../Knowladge";
 import MainContainer from "../MainContainer";
 import TitleHeader from "../TitleHeader";
 import TopDivision from "../TopDivision";
 import ProgressBar from "./ProgressBar";
+import { FaChevronCircleRight } from "react-icons/fa";
 
 export default function LanguageSkill() {
   return (
@@ -35,16 +37,7 @@ export default function LanguageSkill() {
         <TitleHeader title="Knowledge" secNumber={2} titleWidth="w-3/12" />
         <div className="mt-5 w-full">
           <MainContainer>
-            <ul className="grid grid-cols-3 gap-2 w-full">
-              <li>Photoshop</li>
-              <li>Sketch</li>
-              <li>Figma</li>
-              <li>Gulp</li>
-              <li>Sass</li>
-              <li>Bootstrap</li>
-              <li>React js</li>
-              <li>Vue js</li>
-            </ul>
+            <Knowladge />
           </MainContainer>
         </div>
       </div>
