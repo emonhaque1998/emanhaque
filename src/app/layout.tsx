@@ -5,6 +5,7 @@ import "./globals.css";
 import Header from "@/components/Header";
 import MySelf from "@/components/MySelf";
 import Banner from "@/components/Banner";
+import ScrollToTop from "@/components/ScrollTop";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,6 +32,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <ScrollToTop />
         <ThemeProvider
           attribute="class"
           defaultTheme="light"
