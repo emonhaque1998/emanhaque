@@ -28,17 +28,22 @@ export async function createUser() {
   const name = `${user.firstName || ""} ${user.lastName || ""}`.trim();
   const role = user.publicMetadata?.role; // Default to 'user' if no role is set
 
-  // Sync the user to your database
-  const createU = await prisma.user.upsert({
-    where: { clerkId: userId },
-    update: {},
-    create: {
-      clerkId: userId,
-      email,
-      name,
-      role,
-    },
-  });
+  try {
+    // Sync the user to your database
+    const createU = await prisma.user.upsert({
+      where: { clerkId: userId },
+      update: {},
+      create: {
+        clerkId: userId,
+        email,
+        name,
+        role,
+      },
+    });
 
-  return createU;
+    return createU;
+  } catch (error) {
+    console.error("Error creating user:", error);
+    return null;
+  }
 }
