@@ -1,3 +1,3 @@
-export default function User() {
-  return <h1>Hi there</h1>;
+export default function Default() {
+  return null;
 }
