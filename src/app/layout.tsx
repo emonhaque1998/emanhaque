@@ -56,7 +56,7 @@ export default async function RootLayout({
                 <div className="h-8 max-md:h-0"></div>
                 <Header />
                 <div className="h-24 max-md:hidden"></div>
-                {user ? <MySelf userInfo={user} /> : <MySelf />}
+
                 <Banner />
                 <div className="flex justify-end max-md:block max-md:px-5 pr-20 relative -mt-28 max-md:-mt-0 z-10">
                   <div className="flex flex-col w-3/5 max-md:w-full">
