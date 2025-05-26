@@ -8,9 +8,7 @@ export async function createUser() {
     return null; // User is not authenticated
   }
 
-  const user = await prisma.user.findUnique({
-    where: { clerkId: userId },
-  });
+  const user = await prisma.user.findFirst();
 
   return user;
 }
