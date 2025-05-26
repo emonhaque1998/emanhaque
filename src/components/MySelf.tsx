@@ -5,8 +5,25 @@ import { FaLinkedin } from "react-icons/fa6";
 import Button from "./Button";
 import { MdEmail } from "react-icons/md";
 import ShowAbailable from "./ShowAbailable";
+import { usePathname } from "next/navigation";
 
-export default function MySelf() {
+interface MySelfProps {
+  userInfo?: {
+    id: string;
+    email: string;
+    name?: string | null; // Optional field
+    role?: string | null; // Optional field
+    clerkId: string;
+    createdAt: Date; // Ensure this is a Date object
+  };
+}
+
+export default function MySelf({ userInfo }: MySelfProps) {
+  const pathName = usePathname();
+
+  const isAuthendicated =
+    pathName.startsWith("/user") || pathName.startsWith("/admin");
+  console.log(isAuthendicated);
   return (
     <div className="dark:bg-[#00283a] bg-white w-1/4 z-30 sticky max-md:hidden px-10 py-8 top-22 left-40 rounded-xl">
       <div className="flex flex-col">
@@ -16,7 +33,9 @@ export default function MySelf() {
           </div>
         </div>
         <div className="flex flex-col items-center mt-2">
-          <h1 className="text-lg font-bold">Eman H.</h1>
+          <h1 className="text-lg font-bold">
+            {isAuthendicated ? userInfo?.name : "Eman H."}
+          </h1>
           <h3 className="text-sm text-gray-400">
             I'm a{" "}
             <span className="dark:text-[#70ba65] text-red-600">
