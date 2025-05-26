@@ -6,6 +6,13 @@ import MobileNavMenu from "@/components/MobileNavMenu";
 import { useState } from "react";
 import Button from "./Button";
 import { FaArrowDown } from "react-icons/fa";
+import {
+  SignInButton,
+  SignUpButton,
+  SignedIn,
+  SignedOut,
+  UserButton,
+} from "@clerk/nextjs";
 
 export default function Header() {
   const [showNavMenu, setNavMenu] = useState(false);
@@ -24,9 +31,28 @@ export default function Header() {
 
             <ModeToggle />
             <div className="max-md:hidden">
-              <Button text="Download CV">
+              {/* <Button text="Download CV">
                 <FaArrowDown />
-              </Button>
+              </Button> */}
+              <SignedOut>
+                <div className="flex flex-row gap-3">
+                  <SignInButton mode="modal">
+                    <div className="bg-black text-white px-3 cursor-pointer flex items-center justify-center shadow py-2 rounded-full">
+                      <span className="text-sm">Sign In</span>
+                    </div>
+                  </SignInButton>
+                  <SignUpButton mode="modal">
+                    <div className="bg-black text-white px-3 cursor-pointer flex items-center justify-center shadow py-2 rounded-full">
+                      <span className="text-sm">Sign In</span>
+                    </div>
+                  </SignUpButton>
+                </div>
+              </SignedOut>
+              <SignedIn>
+                <div className="flex items-center justify-center">
+                  <UserButton />
+                </div>
+              </SignedIn>
             </div>
             <MenuButtonForM
               getMenuShowData={navChangeHandler}

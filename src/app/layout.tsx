@@ -6,6 +6,14 @@ import Header from "@/components/Header";
 import MySelf from "@/components/MySelf";
 import Banner from "@/components/Banner";
 import ScrollToTop from "@/components/ScrollTop";
+import {
+  ClerkProvider,
+  SignInButton,
+  SignUpButton,
+  SignedIn,
+  SignedOut,
+  UserButton,
+} from "@clerk/nextjs";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,33 +36,35 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        <ScrollToTop />
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="light"
-          enableSystem
-          disableTransitionOnChange
+    <ClerkProvider>
+      <html lang="en" suppressHydrationWarning>
+        <body
+          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
-          <div className="bg-light-background dark:bg-background">
-            <div className="container mx-auto relative max-md:static">
-              <div className="h-8 max-md:h-0"></div>
-              <Header />
-              <div className="h-24 max-md:hidden"></div>
-              <MySelf />
-              <Banner />
-              <div className="flex justify-end max-md:block max-md:px-5 pr-20 relative -mt-28 max-md:-mt-0 z-10">
-                <div className="flex flex-col w-3/5 max-md:w-full">
-                  {children}
+          <ScrollToTop />
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="light"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <div className="bg-light-background dark:bg-background">
+              <div className="container mx-auto relative max-md:static">
+                <div className="h-8 max-md:h-0"></div>
+                <Header />
+                <div className="h-24 max-md:hidden"></div>
+                <MySelf />
+                <Banner />
+                <div className="flex justify-end max-md:block max-md:px-5 pr-20 relative -mt-28 max-md:-mt-0 z-10">
+                  <div className="flex flex-col w-3/5 max-md:w-full">
+                    {children}
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        </ThemeProvider>
-      </body>
-    </html>
+          </ThemeProvider>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }

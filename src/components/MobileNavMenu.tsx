@@ -10,8 +10,6 @@ const navItems = [
   { name: "About", path: "/about" },
   { name: "Contact", path: "/contact" },
   { name: "Blog", path: "/blog" },
-  { name: "Services", path: "/services" },
-  { name: "Testimonials", path: "/testimonials" },
 ];
 
 export default function MobileNavMenu({ show }: { show: boolean }) {

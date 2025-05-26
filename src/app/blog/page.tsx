@@ -1,9 +1,30 @@
 import CategoryItems from "@/components/Blog/CategoryItems";
+import TopDivision from "@/components/TopDivision";
+
+const categoryItems = [
+  {
+    name: "Design",
+    postCount: 5,
+    slug: "design",
+  },
+  {
+    name: "Development",
+    postCount: 10,
+    slug: "development",
+  },
+  {
+    name: "Marketing",
+    postCount: 3,
+    slug: "marketing",
+  },
+];
 
 export default function Blog() {
   return (
     <>
-      <CategoryItems />
+      <TopDivision>
+        <CategoryItems categoryItems={categoryItems} />
+      </TopDivision>
     </>
   );
 }
