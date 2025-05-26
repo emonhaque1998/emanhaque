@@ -4,5 +4,5 @@ import MySelf from "../MySelf";
 export default async function SideBar() {
   const user = await createUser();
 
-  return user && <MySelf userInfo={user} />;
+  return user ? <MySelf userInfo={user} /> : <MySelf />;
 }
