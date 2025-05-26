@@ -1,4 +1,3 @@
-"use server";
 import { createUser } from "@/actions/admin/user";
 
 export default async function SideBar() {
