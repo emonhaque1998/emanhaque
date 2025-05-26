@@ -38,6 +38,8 @@ export default function MySelf() {
     getUser();
   }, []);
 
+  console.log("User:", user);
+
   return (
     <div className="dark:bg-[#00283a] bg-white w-1/4 z-30 sticky max-md:hidden px-10 py-8 top-22 left-40 rounded-xl">
       <div className="flex flex-col">
