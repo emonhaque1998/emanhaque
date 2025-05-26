@@ -20,7 +20,9 @@ export async function createUser() {
   }
 
   const user = (await currentUser()) as User;
-  if (!user || !user.emailAddresses?.[0]?.emailAddress) return;
+  if (!user || !user.emailAddresses?.[0]?.emailAddress) {
+    return;
+  }
 
   const email = user.emailAddresses[0].emailAddress;
   const name = `${user.firstName || ""} ${user.lastName || ""}`.trim();
