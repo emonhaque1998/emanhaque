@@ -1,9 +1,9 @@
-import SideBar from "@/components/server/SideBar";
+import MySelf from "@/components/MySelf";
 
 export default function DefaultSideBar() {
   return (
     <>
-      <SideBar />
+      <MySelf />
     </>
   );
 }

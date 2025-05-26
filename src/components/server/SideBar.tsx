@@ -1,6 +1,8 @@
+"use server";
 import { createUser } from "@/actions/admin/user";
-import MySelf from "../MySelf";
 
 export default async function SideBar() {
-  return <MySelf />;
+  const user = await createUser();
+
+  return <h1 className="text-lg font-bold">{user ? user?.name : "Eman H."}</h1>;
 }

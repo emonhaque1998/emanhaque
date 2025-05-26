@@ -6,6 +6,8 @@ import Button from "./Button";
 import { MdEmail } from "react-icons/md";
 import ShowAbailable from "./ShowAbailable";
 import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
+import { createUser } from "@/actions/admin/user";
 
 interface MySelfProps {
   userInfo?: {
@@ -18,12 +20,24 @@ interface MySelfProps {
   };
 }
 
-export default function MySelf({ userInfo }: MySelfProps) {
+export default function MySelf() {
+  const [user, setUser] = useState<MySelfProps["userInfo"] | null>(null);
+
   const pathName = usePathname();
 
   const isAuthendicated =
     pathName.startsWith("/user") || pathName.startsWith("/admin");
-  console.log(isAuthendicated);
+
+  useEffect(() => {
+    const getUser = async () => {
+      const user = await createUser();
+
+      setUser(user);
+    };
+
+    getUser();
+  }, []);
+
   return (
     <div className="dark:bg-[#00283a] bg-white w-1/4 z-30 sticky max-md:hidden px-10 py-8 top-22 left-40 rounded-xl">
       <div className="flex flex-col">
@@ -34,11 +48,7 @@ export default function MySelf({ userInfo }: MySelfProps) {
         </div>
         <div className="flex flex-col items-center mt-2">
           <h1 className="text-lg font-bold">
-            {userInfo
-              ? isAuthendicated
-                ? userInfo?.name
-                : "Eman H."
-              : "Eman H."}
+            {user ? (isAuthendicated ? user?.name : "Eman H.") : "Eman H."}
           </h1>
           <h3 className="text-sm text-gray-400">
             I'm a{" "}
