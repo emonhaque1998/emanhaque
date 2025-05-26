@@ -1,6 +1,4 @@
-import Banner from "@/components/Banner";
 import Footer from "@/components/Footer";
-import Header from "@/components/Header";
 import MyService from "@/components/Home/MyService";
 import MyStory from "@/components/Home/MyStory";
 import PricePlan from "@/components/Home/PricePlan";
@@ -9,8 +7,19 @@ import SkillOverview from "@/components/Home/SkillOverview";
 import Testimonials from "@/components/Home/Testimonials";
 import VideoResume from "@/components/Home/VideoResume";
 import HorizontalRowDotted from "@/components/HorizontalRowDotted";
-import LeftSideBar from "@/components/server/SideBar";
 
-export default function Home() {
-  return <></>;
+export default function Default() {
+  return (
+    <>
+      <SkillOverview />
+      <MyStory />
+      <VideoResume />
+      <MyService />
+      <PricePlan />
+      <Testimonials />
+      <Publications />
+      <HorizontalRowDotted />
+      <Footer />
+    </>
+  );
 }
