@@ -19,6 +19,7 @@ export default function Header() {
   const navChangeHandler = () => {
     setNavMenu(!showNavMenu);
   };
+
   return (
     <header className="bg-[#fcfcfe] dark:bg-[#00283a] rounded-xl max-md:rounded-none sticky max-md:relative top-0 z-50">
       <div className="py-6 max-md:py-8 px-20 max-md:px-5">
