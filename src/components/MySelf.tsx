@@ -34,7 +34,11 @@ export default function MySelf({ userInfo }: MySelfProps) {
         </div>
         <div className="flex flex-col items-center mt-2">
           <h1 className="text-lg font-bold">
-            {isAuthendicated ? userInfo?.name : "Eman H."}
+            {userInfo
+              ? isAuthendicated
+                ? userInfo?.name
+                : "Eman H."
+              : "Eman H."}
           </h1>
           <h3 className="text-sm text-gray-400">
             I'm a{" "}
