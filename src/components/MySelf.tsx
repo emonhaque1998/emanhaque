@@ -7,7 +7,7 @@ import { MdEmail } from "react-icons/md";
 import ShowAbailable from "./ShowAbailable";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { createUser } from "@/actions/admin/user";
+import { createUser, getUser } from "@/actions/admin/user";
 
 interface MySelfProps {
   userInfo?: {
@@ -29,16 +29,14 @@ export default function MySelf() {
     pathName.startsWith("/user") || pathName.startsWith("/admin");
 
   useEffect(() => {
-    const getUser = async () => {
-      const user = await createUser();
+    const emon = async () => {
+      const user = await getUser();
 
-      setUser(user);
+      console.log("User data:", user);
     };
 
-    getUser();
+    emon();
   }, []);
-
-  console.log("User:", user);
 
   return (
     <div className="dark:bg-[#00283a] bg-white w-1/4 z-30 sticky max-md:hidden px-10 py-8 top-22 left-40 rounded-xl">

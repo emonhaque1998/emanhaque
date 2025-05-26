@@ -47,3 +47,7 @@ export async function createUser() {
     return null;
   }
 }
+
+export async function getUser() {
+  return { message: "This is a server action to get user data." };
+}
