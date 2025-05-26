@@ -7,6 +7,7 @@ import SkillOverview from "@/components/Home/SkillOverview";
 import Testimonials from "@/components/Home/Testimonials";
 import VideoResume from "@/components/Home/VideoResume";
 import HorizontalRowDotted from "@/components/HorizontalRowDotted";
+import LeftSideBar from "@/components/server/LeftSideBar";
 
 export default function Home() {
   return (
@@ -20,6 +21,7 @@ export default function Home() {
       <Publications />
       <HorizontalRowDotted />
       <Footer />
+      <LeftSideBar />
     </>
   );
 }

@@ -4,5 +4,5 @@ import MySelf from "../MySelf";
 export default async function LeftSideBar() {
   const user = await createUser();
 
-  return <h1 className=" absolute top-0">{user?.email}</h1>;
+  return <h1 className="">{user?.email}</h1>;
 }
