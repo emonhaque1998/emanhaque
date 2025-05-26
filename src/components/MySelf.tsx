@@ -8,7 +8,6 @@ import ShowAbailable from "./ShowAbailable";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { createUser, getUser } from "@/actions/admin/user";
-import SideBar from "./server/SideBar";
 
 interface MySelfProps {
   user?: {
@@ -36,7 +35,9 @@ export default function MySelf({ user }: MySelfProps) {
           </div>
         </div>
         <div className="flex flex-col items-center mt-2">
-          <SideBar />
+          <h1 className="text-lg font-bold">
+            {user ? (isAuthendicated ? user?.name : "Eman H.") : "Eman H."}
+          </h1>
           <h3 className="text-sm text-gray-400">
             I'm a{" "}
             <span className="dark:text-[#70ba65] text-red-600">
