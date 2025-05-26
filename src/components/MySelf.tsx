@@ -10,7 +10,7 @@ import { useEffect, useState } from "react";
 import { createUser, getUser } from "@/actions/admin/user";
 
 interface MySelfProps {
-  userInfo?: {
+  user?: {
     id: string;
     email: string;
     name?: string | null; // Optional field
@@ -20,23 +20,11 @@ interface MySelfProps {
   };
 }
 
-export default function MySelf() {
-  const [user, setUser] = useState<MySelfProps["userInfo"] | null>(null);
-
+export default function MySelf({ user }: MySelfProps) {
   const pathName = usePathname();
 
   const isAuthendicated =
     pathName.startsWith("/user") || pathName.startsWith("/admin");
-
-  useEffect(() => {
-    const emon = async () => {
-      const user = await getUser();
-
-      console.log("User data:", user);
-    };
-
-    emon();
-  }, []);
 
   return (
     <div className="dark:bg-[#00283a] bg-white w-1/4 z-30 sticky max-md:hidden px-10 py-8 top-22 left-40 rounded-xl">
