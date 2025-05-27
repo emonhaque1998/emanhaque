@@ -18,6 +18,7 @@ export async function GET() {
   const name = `${clerkUser.firstName ?? ""} ${
     clerkUser.lastName ?? ""
   }`.trim();
+  const image = clerkUser.imageUrl;
 
   // Upsert user into your database using Prisma
   const dbUser = await prisma.user.upsert({
@@ -25,11 +26,13 @@ export async function GET() {
     update: {
       email,
       name,
+      image,
     },
     create: {
       clerkId: userId,
       email,
       name,
+      image,
       role: "user", // Default role, adjust as necessary
     },
   });
