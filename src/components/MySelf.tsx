@@ -8,6 +8,9 @@ import ShowAbailable from "./ShowAbailable";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { useAppSelector, useAppDispatch } from "@/store/hooks";
+import { addUser } from "@/store/userSlice";
+import { useUser } from "@clerk/nextjs";
 
 interface MySelfProps {
   user?: {
@@ -22,7 +25,10 @@ interface MySelfProps {
 }
 
 export default function MySelf() {
-  const [user, setUser] = useState<MySelfProps["user"]>(undefined);
+  // const [user, setUser] = useState<MySelfProps["user"]>(undefined);
+  const user = useAppSelector((state) => state.userSlice.user);
+  const dispatch = useAppDispatch();
+  const { user: clerkUser } = useUser();
   const pathName = usePathname();
 
   const isAuthendicated =
@@ -32,11 +38,23 @@ export default function MySelf() {
     const createNewUser = async () => {
       const res = await axios.get("/api/user");
       console.log("User data:", res);
-      setUser(res.data);
+      // setUser(res.data);
+      dispatch(addUser(res.data));
     };
 
     createNewUser();
   }, []);
+
+  useEffect(() => {
+    const createNewUser = async () => {
+      const res = await axios.get("/api/user");
+      console.log("User data:", res);
+      // setUser(res.data);
+      dispatch(addUser(res.data));
+    };
+
+    createNewUser();
+  }, [clerkUser?.imageUrl]);
 
   return (
     <div className="dark:bg-[#00283a] bg-white w-1/4 z-30 sticky max-md:hidden px-10 py-8 top-22 left-40 rounded-xl">

@@ -15,12 +15,12 @@ export default function ShowAbailable({
     <>
       <Image
         src={(isAuthPage && imageUrl) || "/assets/images/emon.jpg"}
-        className="rounded-full cursor-pointer"
+        className="rounded-full cursor-pointer w-24 h-24 object-cover object-top"
         alt="Eman H."
         onMouseEnter={() => setAvailable(true)}
         onMouseLeave={() => setAvailable(false)}
         width={100}
-        height={100}
+        height={0}
       />
       <div
         className={`bg-[#70ba65] flex justify-center items-center border-white dark:border-[#00283a] border-2 w-5 h-5 rounded-full absolute bottom-1 right-2 ${
