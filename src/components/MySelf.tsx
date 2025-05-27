@@ -7,7 +7,6 @@ import { MdEmail } from "react-icons/md";
 import ShowAbailable from "./ShowAbailable";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { createUser, getUser } from "../app/actions/user";
 
 interface MySelfProps {
   user?: {
