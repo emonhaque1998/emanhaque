@@ -7,6 +7,7 @@ import { MdEmail } from "react-icons/md";
 import ShowAbailable from "./ShowAbailable";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import axios from "axios";
 
 interface MySelfProps {
   user?: {
@@ -19,13 +20,24 @@ interface MySelfProps {
   };
 }
 
-export default function MySelf({ user }: MySelfProps) {
+export default function MySelf() {
+  const [user, setUser] = useState<MySelfProps["user"]>(undefined);
   const pathName = usePathname();
-
-  console.log(user);
 
   const isAuthendicated =
     pathName.startsWith("/user") || pathName.startsWith("/admin");
+
+  useEffect(() => {
+    const createNewUser = async () => {
+      const res = await axios.get("/api/user");
+
+      setUser(res.data);
+    };
+
+    createNewUser();
+  }, []);
+
+  console.log(user);
 
   return (
     <div className="dark:bg-[#00283a] bg-white w-1/4 z-30 sticky max-md:hidden px-10 py-8 top-22 left-40 rounded-xl">
