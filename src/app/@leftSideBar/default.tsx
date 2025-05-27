@@ -5,5 +5,9 @@ import prisma from "@/lib/prisma";
 export default async function Default() {
   const user = await createUser();
 
-  return <>{user ? <MySelf user={user} /> : <MySelf />}</>;
+  return (
+    <>
+      <h1>{user?.name}</h1>
+    </>
+  );
 }
