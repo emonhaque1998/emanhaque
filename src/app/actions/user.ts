@@ -13,6 +13,8 @@ export const createUser = async () => {
   });
 
   if (existingUser) return existingUser;
+
+  return null;
 };
 
 export async function getUser() {
