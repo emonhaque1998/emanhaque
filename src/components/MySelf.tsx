@@ -16,7 +16,8 @@ interface MySelfProps {
     name?: string | null; // Optional field
     role?: string | null; // Optional field
     clerkId: string;
-    createdAt: Date; // Ensure this is a Date object
+    image?: string;
+    createdAt: Date;
   };
 }
 
@@ -30,21 +31,19 @@ export default function MySelf() {
   useEffect(() => {
     const createNewUser = async () => {
       const res = await axios.get("/api/user");
-
+      console.log("User data:", res);
       setUser(res.data);
     };
 
     createNewUser();
   }, []);
 
-  console.log(user);
-
   return (
     <div className="dark:bg-[#00283a] bg-white w-1/4 z-30 sticky max-md:hidden px-10 py-8 top-22 left-40 rounded-xl">
       <div className="flex flex-col">
         <div className="flex justify-center">
           <div className="justify-center relative inline-block">
-            <ShowAbailable />
+            <ShowAbailable imageUrl={user?.image} />
           </div>
         </div>
         <div className="flex flex-col items-center mt-2">
