@@ -6,28 +6,7 @@ import prisma from "@/lib/prisma";
 export const createUser = async () => {
   const { userId } = await auth();
 
-  if (!userId) return null;
-
-  const existingUser = await prisma.user.findUnique({
-    where: { clerkId: userId },
-  });
-
-  if (existingUser) return existingUser;
-
-  const client = await clerkClient();
-  const clerkUser = await client.users.getUser(userId);
-  const role = (clerkUser.publicMetadata.role as string) || "USER";
-
-  const newUser = await prisma.user.create({
-    data: {
-      clerkId: userId,
-      email: clerkUser.emailAddresses[0].emailAddress,
-      name: `${clerkUser.firstName} ${clerkUser.lastName}`.trim(),
-      role: role,
-    },
-  });
-
-  return newUser;
+  return userId;
 };
 
 export async function getUser() {

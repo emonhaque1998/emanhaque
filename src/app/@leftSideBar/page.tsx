@@ -7,7 +7,7 @@ export default async function LeftSideBar() {
 
   return (
     <>
-      <h1 className="text-lg font-bold">{emonUser?.name}</h1>
+      <h1 className="text-lg font-bold">{emonUser}</h1>
       <MySelf />
     </>
   );
