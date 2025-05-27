@@ -1,31 +1,33 @@
 "use server";
 
-import { auth, clerkClient } from "@clerk/nextjs/server";
+import { auth, clerkClient, currentUser } from "@clerk/nextjs/server";
 import prisma from "@/lib/prisma";
 
 export const createUser = async () => {
-  // const { userId } = await auth();
+  const user = await currentUser();
 
-  // if (!userId) return null;
+  if (!user?.id) return null;
 
-  const existingUser = await prisma.user.findFirst();
+  const existingUser = await prisma.user.findUnique({
+    where: { clerkId: user.id },
+  });
 
-  // if (existingUser) return existingUser;
+  if (existingUser) return existingUser;
 
-  // const client = await clerkClient();
-  // const clerkUser = await client.users.getUser(userId);
-  // const role = (clerkUser.publicMetadata.role as string) || "USER";
+  const client = await clerkClient();
+  const clerkUser = await client.users.getUser(user.id);
+  const role = (clerkUser.publicMetadata.role as string) || "USER";
 
-  // const newUser = await prisma.user.create({
-  //   data: {
-  //     clerkId: userId,
-  //     email: clerkUser.emailAddresses[0].emailAddress,
-  //     name: `${clerkUser.firstName} ${clerkUser.lastName}`.trim(),
-  //     role: role,
-  //   },
-  // });
+  const newUser = await prisma.user.create({
+    data: {
+      clerkId: user.id,
+      email: clerkUser.emailAddresses[0].emailAddress,
+      name: `${clerkUser.firstName} ${clerkUser.lastName}`.trim(),
+      role: role,
+    },
+  });
 
-  return existingUser;
+  return newUser;
 };
 
 export async function getUser() {

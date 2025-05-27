@@ -3,12 +3,7 @@ import MySelf from "@/components/MySelf";
 import prisma from "@/lib/prisma";
 
 export default async function LeftSideBar() {
-  const emonUser = await createUser();
+  const user = await createUser();
 
-  return (
-    <>
-      <h1 className="text-lg font-bold">{emonUser?.name}</h1>
-      <MySelf />
-    </>
-  );
+  return <>{user ? <MySelf user={user} /> : <MySelf />}</>;
 }

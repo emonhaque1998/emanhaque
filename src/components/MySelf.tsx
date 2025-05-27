@@ -23,6 +23,8 @@ interface MySelfProps {
 export default function MySelf({ user }: MySelfProps) {
   const pathName = usePathname();
 
+  console.log(user);
+
   const isAuthendicated =
     pathName.startsWith("/user") || pathName.startsWith("/admin");
 
