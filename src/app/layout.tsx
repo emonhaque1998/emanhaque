@@ -14,7 +14,6 @@ import {
   SignedOut,
   UserButton,
 } from "@clerk/nextjs";
-import LeftSideBar from "@/components/server/SideBar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
