@@ -4,15 +4,14 @@ import { auth, currentUser } from "@clerk/nextjs/server";
 import prisma from "@/lib/prisma";
 
 export async function createUser() {
-  const { userId } = await auth();
+  try {
+    const user = await prisma.user.findFirst();
 
-  if (!userId) {
-    return null; // User is not authenticated
+    return user;
+  } catch (error) {
+    console.error("Error creating user:", error);
+    return null; // Handle error appropriately
   }
-
-  const user = await prisma.user.findFirst();
-
-  return user;
 }
 
 export async function getUser() {
