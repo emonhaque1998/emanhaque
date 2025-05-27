@@ -1,4 +1,4 @@
-import { createUser } from "../../../actions/admin/user";
+import { createUser } from "../actions/user";
 import MySelf from "@/components/MySelf";
 
 export default async function LeftSideBar() {

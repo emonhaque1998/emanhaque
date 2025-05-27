@@ -1,4 +1,4 @@
-import { createUser, getUser } from "../../../actions/admin/user";
+import { createUser, getUser } from "@/app/actions/user";
 import MySelf from "@/components/MySelf";
 import prisma from "@/lib/prisma";
 

@@ -1,4 +1,4 @@
-import { createUser } from "../../../actions/admin/user";
+import { createUser } from "../../app/actions/user";
 
 export default async function SideBar() {
   const user = await createUser();
