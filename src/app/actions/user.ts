@@ -1,17 +1,33 @@
 "use server";
 
-import { auth, currentUser } from "@clerk/nextjs/server";
+import { auth, currentUser, clerkClient } from "@clerk/nextjs/server";
 import prisma from "@/lib/prisma";
 
 export async function createUser() {
-  try {
-    const user = await prisma.user.findFirst();
+  const { userId } = await auth();
 
-    return user;
-  } catch (error) {
-    console.error("Error creating user:", error);
-    return null; // Handle error appropriately
-  }
+  if (!userId) return null;
+
+  const existingUser = await prisma.user.findUnique({
+    where: { clerkId: userId },
+  });
+
+  if (existingUser) return existingUser;
+
+  const client = await clerkClient();
+  const clerkUser = await client.users.getUser(userId);
+  const role = (clerkUser.publicMetadata.role as string) || "USER";
+
+  const newUser = await prisma.user.create({
+    data: {
+      clerkId: userId,
+      email: clerkUser.emailAddresses[0].emailAddress,
+      name: `${clerkUser.firstName} ${clerkUser.lastName}`.trim(),
+      role: role,
+    },
+  });
+
+  return newUser;
 }
 
 export async function getUser() {
