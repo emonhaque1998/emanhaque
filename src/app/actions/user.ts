@@ -1,9 +1,9 @@
 "use server";
 
-import { auth, currentUser, clerkClient } from "@clerk/nextjs/server";
+import { auth, clerkClient } from "@clerk/nextjs/server";
 import prisma from "@/lib/prisma";
 
-export async function createUser() {
+export const createUser = async () => {
   const { userId } = await auth();
 
   if (!userId) return null;
@@ -28,7 +28,7 @@ export async function createUser() {
   });
 
   return newUser;
-}
+};
 
 export async function getUser() {
   return { message: "This is a server action to get user data." };
