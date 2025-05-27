@@ -5,9 +5,5 @@ import prisma from "@/lib/prisma";
 export default async function LeftSideBar() {
   const user = await createUser();
 
-  return (
-    <>
-      <h1>{user?.id}</h1>
-    </>
-  );
+  return <>{user ? <MySelf user={user} /> : <MySelf />}</>;
 }
