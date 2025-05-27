@@ -3,12 +3,18 @@
 import { useState } from "react";
 import Image from "next/image";
 
-export default function ShowAbailable({ imageUrl }: { imageUrl?: string }) {
+export default function ShowAbailable({
+  imageUrl,
+  isAuthPage,
+}: {
+  imageUrl?: string;
+  isAuthPage: boolean;
+}) {
   const [showAbailable, setAvailable] = useState(false);
   return (
     <>
       <Image
-        src={imageUrl || "/assets/images/emon.jpg"}
+        src={(isAuthPage && imageUrl) || "/assets/images/emon.jpg"}
         className="rounded-full cursor-pointer"
         alt="Eman H."
         onMouseEnter={() => setAvailable(true)}

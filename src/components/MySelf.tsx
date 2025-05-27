@@ -43,7 +43,10 @@ export default function MySelf() {
       <div className="flex flex-col">
         <div className="flex justify-center">
           <div className="justify-center relative inline-block">
-            <ShowAbailable imageUrl={user?.image} />
+            <ShowAbailable
+              imageUrl={user?.image}
+              isAuthPage={isAuthendicated}
+            />
           </div>
         </div>
         <div className="flex flex-col items-center mt-2">
