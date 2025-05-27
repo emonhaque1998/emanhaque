@@ -9,7 +9,7 @@ export const createUser = async () => {
   if (!userId?.id) return null;
 
   const existingUser = await prisma.user.findUnique({
-    where: { clerkId: userId.id },
+    where: { clerkId: userId?.id },
   });
 
   if (existingUser) return existingUser;
