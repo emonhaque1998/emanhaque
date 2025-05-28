@@ -13,6 +13,7 @@ import {
   SignedOut,
   UserButton,
 } from "@clerk/nextjs";
+import Link from "next/link";
 
 export default function Header() {
   const [showNavMenu, setNavMenu] = useState(false);
@@ -52,9 +53,12 @@ export default function Header() {
               <SignedIn>
                 <div className="flex flex-row gap-3 items-center">
                   <div>
-                    <button className="px-2 py-1 dark:bg-black/20 cursor-pointer rounded-lg">
+                    <Link
+                      href="/user"
+                      className="px-2 py-1 dark:bg-black/20 cursor-pointer rounded-lg"
+                    >
                       Dashboard
-                    </button>
+                    </Link>
                   </div>
                   <div className="flex items-center justify-center">
                     <UserButton />

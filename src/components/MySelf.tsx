@@ -64,8 +64,6 @@ export default function MySelf() {
   useEffect(() => {
     const createNewUser = async () => {
       const res = await axios.get("/api/user");
-      console.log("User data:", res);
-      // setUser(res.data);
       dispatch(addUser(res.data));
     };
 
