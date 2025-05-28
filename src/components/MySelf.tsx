@@ -25,7 +25,6 @@ interface MySelfProps {
 }
 
 export default function MySelf() {
-  // const [user, setUser] = useState<MySelfProps["user"]>(undefined);
   const user = useAppSelector((state) => state.userSlice.user);
   const dispatch = useAppDispatch();
   const { user: clerkUser } = useUser();
@@ -37,8 +36,6 @@ export default function MySelf() {
   useEffect(() => {
     const createNewUser = async () => {
       const res = await axios.get("/api/user");
-      console.log("User data:", res);
-      // setUser(res.data);
       dispatch(addUser(res.data));
     };
 

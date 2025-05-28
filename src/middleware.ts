@@ -12,7 +12,7 @@ export default clerkMiddleware(async (auth, req) => {
 
   // Redirect unauthenticated users accessing protected routes
   if ((isUserRoute(req) || isAdminRoute(req)) && !isAuthenticated) {
-    const signInUrl = new URL("/sign-in", req.url);
+    const signInUrl = new URL("/", req.url);
     return NextResponse.redirect(signInUrl);
   }
 
