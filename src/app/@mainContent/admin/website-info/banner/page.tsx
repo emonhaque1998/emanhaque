@@ -4,7 +4,7 @@ export default function Page() {
   return (
     <>
       <MainContainer>
-        <h1 className="text-red-400">showing website information</h1>
+        <h1 className="text-red-400">showing Banner information</h1>
       </MainContainer>
     </>
   );
