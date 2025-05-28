@@ -11,6 +11,8 @@ import axios from "axios";
 import { useAppSelector, useAppDispatch } from "@/store/hooks";
 import { addUser } from "@/store/userSlice";
 import { useUser } from "@clerk/nextjs";
+import AdminLeftSideBar from "./admin/AdminLeftSideBar";
+import toast from "react-hot-toast";
 
 interface MySelfProps {
   user?: {
@@ -26,6 +28,7 @@ interface MySelfProps {
 
 export default function MySelf() {
   const user = useAppSelector((state) => state.userSlice.user);
+  const [mounted, setMounted] = useState(false);
   const dispatch = useAppDispatch();
   const { user: clerkUser } = useUser();
   const pathName = usePathname();
@@ -33,10 +36,21 @@ export default function MySelf() {
   const isAuthendicated =
     pathName.startsWith("/user") || pathName.startsWith("/admin");
 
+  const isAdmin = pathName.startsWith("/admin");
+
+  const isUser = pathName.startsWith("/user");
+
   useEffect(() => {
+    setMounted(true);
+
     const createNewUser = async () => {
       const res = await axios.get("/api/user");
-      dispatch(addUser(res.data));
+      console.log("User data:", res.status);
+      if (res.status !== 200) {
+        toast.error(res.data.error || "Failed to fetch user data");
+      } else {
+        dispatch(addUser(res.data));
+      }
     };
 
     createNewUser();
@@ -52,6 +66,9 @@ export default function MySelf() {
 
     createNewUser();
   }, [clerkUser?.imageUrl]);
+
+  // Prevent rendering until mounted on client
+  if (!mounted) return null;
 
   return (
     <div className="dark:bg-[#00283a] bg-white w-1/4 z-30 sticky max-md:hidden px-10 py-8 top-22 left-40 rounded-xl">
@@ -91,36 +108,41 @@ export default function MySelf() {
           </h3>
         </div>
         <HorizontalRowDotted />
-        <div className="flex justify-center py-5">
-          <div className="flex flex-row gap-3">
-            <FaLinkedin className="text-gray-600 text-xl dark:text-[#70ba65]" />
-            <FaLinkedin className="text-gray-600 text-xl dark:text-[#70ba65]" />
-            <FaLinkedin className="text-gray-600 text-xl dark:text-[#70ba65]" />
-            <FaLinkedin className="text-gray-600 text-xl dark:text-[#70ba65]" />
-          </div>
-        </div>
-        <HorizontalRowDotted />
-        <div className="flex flex-col gap-2">
-          <div className="flex flex-row justify-between">
-            <h2>Residence:</h2>
-            <h2>Bangladesh</h2>
-          </div>
-          <div className="flex flex-row justify-between">
-            <h2>City:</h2>
-            <h2>Manikganj</h2>
-          </div>
-          <div className="flex flex-row justify-between">
-            <h2>Age:</h2>
-            <h2>26</h2>
-          </div>
-        </div>
-        <HorizontalRowDotted />
-        <div className="flex justify-center">
-          <Button classProperty="w-2/3" text="Contact Me" outLine={true}>
-            <MdEmail />
-          </Button>
-        </div>
       </div>
+      {!isAuthendicated && (
+        <>
+          <div className="flex justify-center py-5">
+            <div className="flex flex-row gap-3">
+              <FaLinkedin className="text-gray-600 text-xl dark:text-[#70ba65]" />
+              <FaLinkedin className="text-gray-600 text-xl dark:text-[#70ba65]" />
+              <FaLinkedin className="text-gray-600 text-xl dark:text-[#70ba65]" />
+              <FaLinkedin className="text-gray-600 text-xl dark:text-[#70ba65]" />
+            </div>
+          </div>
+          <HorizontalRowDotted />
+          <div className="flex flex-col gap-2">
+            <div className="flex flex-row justify-between">
+              <h2>Residence:</h2>
+              <h2>Bangladesh</h2>
+            </div>
+            <div className="flex flex-row justify-between">
+              <h2>City:</h2>
+              <h2>Manikganj</h2>
+            </div>
+            <div className="flex flex-row justify-between">
+              <h2>Age:</h2>
+              <h2>26</h2>
+            </div>
+          </div>
+          <HorizontalRowDotted />
+          <div className="flex justify-center">
+            <Button classProperty="w-2/3" text="Contact Me" outLine={true}>
+              <MdEmail />
+            </Button>
+          </div>
+        </>
+      )}
+      {isAdmin && <AdminLeftSideBar />}
     </div>
   );
 }

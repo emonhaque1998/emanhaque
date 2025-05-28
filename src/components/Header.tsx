@@ -50,8 +50,15 @@ export default function Header() {
                 </div>
               </SignedOut>
               <SignedIn>
-                <div className="flex items-center justify-center">
-                  <UserButton />
+                <div className="flex flex-row gap-3 items-center">
+                  <div>
+                    <button className="px-2 py-1 dark:bg-black/20 cursor-pointer rounded-lg">
+                      Dashboard
+                    </button>
+                  </div>
+                  <div className="flex items-center justify-center">
+                    <UserButton />
+                  </div>
                 </div>
               </SignedIn>
             </div>

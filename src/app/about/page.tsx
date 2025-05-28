@@ -1,9 +1,3 @@
-import LanguageSkill from "@/components/About/LanguageSkill";
-
-export default function About() {
-  return (
-    <>
-      <LanguageSkill />
-    </>
-  );
+export default function Home() {
+  return null; // or <div>Loading...</div>
 }

@@ -3,17 +3,10 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
 import "./globals.css";
 import Header from "@/components/Header";
-import MySelf from "@/components/MySelf";
 import Banner from "@/components/Banner";
 import ScrollToTop from "@/components/ScrollTop";
-import {
-  ClerkProvider,
-  SignInButton,
-  SignUpButton,
-  SignedIn,
-  SignedOut,
-  UserButton,
-} from "@clerk/nextjs";
+import { ClerkProvider } from "@clerk/nextjs";
+import { Toaster } from "react-hot-toast";
 import { ReduxProvider } from "@/components/ReduxProvider";
 
 const geistSans = Geist({
@@ -68,6 +61,7 @@ export default async function RootLayout({
                     </div>
                   </div>
                 </div>
+                <Toaster />
               </div>
             </ReduxProvider>
           </ThemeProvider>
