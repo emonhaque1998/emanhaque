@@ -4,18 +4,18 @@ import MainContainer from "@/components/MainContainer";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { addBanner, addBannerImage } from "@/store/bannerSlice";
+import { addBanner } from "@/store/bannerSlice";
 import * as motion from "motion/react-client";
 import { AnimatePresence, usePresenceData, wrap } from "motion/react";
 import { useState } from "react";
 
 export default function Page() {
   const dispatch = useAppDispatch();
-  const banner = useAppSelector((state) => state.bannerSlice);
+  const banner = useAppSelector((state) => state.bannerSlice.data);
 
   const [showLoading, setLoading] = useState(false);
   const [imageUrl, setImageUrl] = useState<string | null>(null);
-  console.log(imageUrl);
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
@@ -26,19 +26,16 @@ export default function Page() {
       slogan: formData.get("slogan"),
       url: formData.get("url"),
       image: imageUrl,
+      youtube: formData.get("youtube"),
+      facebook: formData.get("facebook"),
+      linkdin: formData.get("linkdin"),
+      github: formData.get("github"),
     };
 
     const res = await axios.post("/api/banner", data);
-    console.log(res);
+
     if (res.status === 201) {
-      dispatch(
-        addBanner({
-          title: res.data.data.title,
-          slogan: res.data.data.slogan,
-          url: res.data.data.url,
-          image: res.data.data.image || "", // Ensure image can be null
-        })
-      );
+      dispatch(addBanner(res.data.data));
       toast.success(res.data.success);
       setLoading(false);
     } else {
@@ -82,7 +79,7 @@ export default function Page() {
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="Place your title here"
                     required
-                    defaultValue={banner.title || ""} // Pre-fill with existing title
+                    defaultValue={banner?.title} // Pre-fill with existing title
                   />
                 </div>
                 <div>
@@ -99,7 +96,7 @@ export default function Page() {
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="Place your slogan here"
                     required
-                    defaultValue={banner.slogan || ""} // Pre-fill with existing slogan
+                    defaultValue={banner?.slogan} // Pre-fill with existing slogan
                   />
                 </div>
               </div>
@@ -117,7 +114,75 @@ export default function Page() {
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="https://www.youtube.com/watch?v=example"
                   required
-                  defaultValue={banner.url || ""} // Pre-fill with existing URL
+                  defaultValue={banner?.url} // Pre-fill with existing URL
+                />
+              </div>
+              <div className="mb-6">
+                <label
+                  htmlFor="facebook"
+                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >
+                  Facebook Url
+                </label>
+                <input
+                  type="url"
+                  id="facebook"
+                  name="facebook"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  placeholder="https://www.youtube.com/watch?v=example"
+                  required
+                  defaultValue={banner?.facebook} // Pre-fill with existing URL
+                />
+              </div>
+              <div className="mb-6">
+                <label
+                  htmlFor="linkdin"
+                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >
+                  Linkdin Url
+                </label>
+                <input
+                  type="url"
+                  id="linkdin"
+                  name="linkdin"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  placeholder="https://www.youtube.com/watch?v=example"
+                  required
+                  defaultValue={banner?.linkdin} // Pre-fill with existing URL
+                />
+              </div>
+              <div className="mb-6">
+                <label
+                  htmlFor="github"
+                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >
+                  Github Url
+                </label>
+                <input
+                  type="url"
+                  id="github"
+                  name="github"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  placeholder="https://www.youtube.com/watch?v=example"
+                  required
+                  defaultValue={banner?.github} // Pre-fill with existing URL
+                />
+              </div>
+              <div className="mb-6">
+                <label
+                  htmlFor="youtube"
+                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >
+                  Youtube Url
+                </label>
+                <input
+                  type="url"
+                  id="youtube"
+                  name="youtube"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  placeholder="https://www.youtube.com/watch?v=example"
+                  required
+                  defaultValue={banner?.youtube} // Pre-fill with existing URL
                 />
               </div>
               <UploadButton

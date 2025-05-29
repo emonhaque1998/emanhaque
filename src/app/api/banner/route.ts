@@ -31,15 +31,43 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  const { title, slogan, url, image } = parseResult.data;
+  const { title, slogan, url, image, youtube, facebook, github, linkdin } =
+    parseResult.data;
 
   try {
     const existingBanner = await prisma.banner.findFirst();
 
     if (existingBanner != null) {
+      if (image) {
+        const banner = await prisma.banner.update({
+          where: { id: existingBanner.id },
+          data: {
+            title,
+            slogan,
+            url,
+            image,
+            youtube,
+            facebook,
+            github,
+            linkdin,
+          },
+        });
+        return NextResponse.json(
+          { success: "Banner is Updated", data: banner },
+          { status: 201 }
+        );
+      }
       const banner = await prisma.banner.update({
         where: { id: existingBanner.id },
-        data: { title, slogan, url, image },
+        data: {
+          title,
+          slogan,
+          url,
+          youtube,
+          facebook,
+          github,
+          linkdin,
+        },
       });
       return NextResponse.json(
         { success: "Banner is Updated", data: banner },
@@ -47,7 +75,7 @@ export async function POST(req: NextRequest) {
       );
     } else {
       const banner = await prisma.banner.create({
-        data: { title, slogan, url, image },
+        data: { title, slogan, url, image, youtube, facebook, github, linkdin },
       });
       return NextResponse.json(
         { banner, success: "Banner is updated" },

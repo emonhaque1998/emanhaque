@@ -2,11 +2,12 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { BannerInput } from "@/lib/bannerSchema";
 
-const initialState: BannerInput = {
-  title: "",
-  slogan: "",
-  url: "",
-  image: "",
+interface BannerState {
+  data?: BannerInput | null;
+}
+
+const initialState: BannerState = {
+  data: null,
 };
 
 export const bannerSlice = createSlice({
@@ -14,16 +15,10 @@ export const bannerSlice = createSlice({
   initialState,
   reducers: {
     addBanner: (state, action: PayloadAction<BannerInput>) => {
-      state.title = action.payload.title;
-      state.slogan = action.payload.slogan;
-      state.url = action.payload.url;
-      state.image = action.payload.image; // Ensure image can be null
-    },
-    addBannerImage: (state, action: PayloadAction<string>) => {
-      state.image = action.payload;
+      state.data = action.payload;
     },
   },
 });
 
-export const { addBanner, addBannerImage } = bannerSlice.actions;
+export const { addBanner } = bannerSlice.actions;
 export default bannerSlice.reducer;

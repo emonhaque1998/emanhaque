@@ -6,13 +6,19 @@ import Button from "./Button";
 import { MdEmail } from "react-icons/md";
 import ShowAbailable from "./ShowAbailable";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import axios from "axios";
 import { useAppSelector, useAppDispatch } from "@/store/hooks";
 import { addUser } from "@/store/userSlice";
 import { useUser } from "@clerk/nextjs";
 import AdminLeftSideBar from "./admin/AdminLeftSideBar";
 import toast from "react-hot-toast";
+import {
+  FaFacebookSquare,
+  FaGithubSquare,
+  FaYoutubeSquare,
+} from "react-icons/fa";
+import Loading from "./Loading";
 
 interface MySelfProps {
   user?: {
@@ -28,6 +34,7 @@ interface MySelfProps {
 
 export default function MySelf() {
   const user = useAppSelector((state) => state.userSlice.user);
+  const banner = useAppSelector((state) => state.bannerSlice.data);
   const [mounted, setMounted] = useState(false);
   const dispatch = useAppDispatch();
   const { user: clerkUser } = useUser();
@@ -119,14 +126,24 @@ export default function MySelf() {
       </div>
       {!isAuthendicated && (
         <>
-          <div className="flex justify-center py-5">
-            <div className="flex flex-row gap-3">
-              <FaLinkedin className="text-gray-600 text-xl dark:text-[#70ba65]" />
-              <FaLinkedin className="text-gray-600 text-xl dark:text-[#70ba65]" />
-              <FaLinkedin className="text-gray-600 text-xl dark:text-[#70ba65]" />
-              <FaLinkedin className="text-gray-600 text-xl dark:text-[#70ba65]" />
+          <Suspense fallback={<Loading />}>
+            <div className="flex justify-center py-5">
+              <div className="flex flex-row gap-3">
+                <a href={banner?.linkdin} target="_blank">
+                  <FaLinkedin className="text-gray-600 text-xl dark:text-[#70ba65]" />
+                </a>
+                <a href={banner?.facebook} target="_blank">
+                  <FaFacebookSquare className="text-gray-600 text-xl dark:text-[#70ba65]" />
+                </a>
+                <a href={banner?.github} target="_blank">
+                  <FaGithubSquare className="text-gray-600 text-xl dark:text-[#70ba65]" />
+                </a>
+                <a href={banner?.youtube} target="_blank">
+                  <FaYoutubeSquare className="text-gray-600 text-xl dark:text-[#70ba65]" />
+                </a>
+              </div>
             </div>
-          </div>
+          </Suspense>
           <HorizontalRowDotted />
           <div className="flex flex-col gap-2">
             <div className="flex flex-row justify-between">

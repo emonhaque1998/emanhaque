@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const NavItems = [
   { name: "Website Information", path: "/admin/website-info" },
@@ -12,6 +13,7 @@ const NavItems = [
 ];
 
 export default function AdminLeftSideBar() {
+  const pathName = usePathname();
   return (
     <>
       <ul>
@@ -19,7 +21,11 @@ export default function AdminLeftSideBar() {
           <li key={item.name} className="mb-2">
             <Link
               href={item.path}
-              className="block px-4 py-1 text-[#00283a] dark:text-white hover:bg-gray-200 dark:hover:bg-black/20 hover:text-[#00283a] dark:hover:text-white rounded"
+              className={`block ${
+                pathName === item.path
+                  ? "text-[#70ba65] dark:text-[#70ba65]"
+                  : "text-[#00283a] dark:text-white"
+              } px-4 py-1 hover:bg-gray-200 dark:hover:bg-black/20 hover:text-[#00283a] dark:hover:text-white rounded`}
             >
               {item.name}
             </Link>
