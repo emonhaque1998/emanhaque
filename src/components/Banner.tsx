@@ -10,6 +10,7 @@ import { addBanner } from "@/store/bannerSlice";
 export default function Banner() {
   const dispatch = useAppDispatch();
   const banner = useAppSelector((state) => state.bannerSlice);
+  console.log("Banner data:", banner);
   useEffect(() => {
     const getBanner = async () => {
       const banner = await axios.get("/api/banner");
@@ -19,6 +20,7 @@ export default function Banner() {
             title: banner.data.title,
             slogan: banner.data.slogan,
             url: banner.data.url,
+            image: banner.data.image,
           })
         );
       } else {
@@ -31,10 +33,13 @@ export default function Banner() {
   return (
     <div className="px-10 max-md:px-0 w-full absolute max-md:static top-20">
       <div
-        className={`relative h-screen bg-no-repeat z-10 bg-cover bg-[url(${
-          banner.image ||
-          "https://img.freepik.com/free-photo/green-park-view_1417-1494.jpg?semt=ais_hybrid&w=740"
-        })]`}
+        className={`relative h-screen bg-no-repeat z-10 bg-cover `}
+        style={{
+          backgroundImage: `url(${
+            banner.image ||
+            "https://img.freepik.com/free-photo/green-park-view_1417-1494.jpg?semt=ais_hybrid&w=740"
+          })`,
+        }}
       >
         <div className="absolute inset-0 bg-black/50 -z-10"></div>
         <div className="flex flex-col items-center justify-center h-full z-10">
