@@ -12,28 +12,6 @@ export default function Page() {
   const banner = useAppSelector((state) => state.bannerSlice);
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    const formData = new FormData(e.currentTarget);
-    const data = {
-      title: formData.get("title"),
-      slogan: formData.get("slogan"),
-      url: formData.get("url"),
-    };
-
-    const res = await axios.post("/api/banner", data);
-
-    if (res.status === 201) {
-      dispatch(
-        addBanner({
-          title: res.data.data.title,
-          slogan: res.data.data.slogan,
-          url: res.data.data.url,
-        })
-      );
-      toast.success(res.data.success);
-    } else {
-      toast.error(res.data.error || "Something went wrong");
-    }
   };
 
   return (
@@ -71,7 +49,6 @@ export default function Page() {
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="Place your title here"
                     required
-                    defaultValue={banner.title || ""} // Pre-fill with existing title
                   />
                 </div>
                 <div>
@@ -88,7 +65,6 @@ export default function Page() {
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="Place your slogan here"
                     required
-                    defaultValue={banner.slogan || ""} // Pre-fill with existing slogan
                   />
                 </div>
               </div>
@@ -106,7 +82,6 @@ export default function Page() {
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="https://www.youtube.com/watch?v=example"
                   required
-                  defaultValue={banner.url || ""} // Pre-fill with existing URL
                 />
               </div>
 
