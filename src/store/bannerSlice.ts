@@ -6,6 +6,7 @@ const initialState: BannerInput = {
   title: "",
   slogan: "",
   url: "",
+  image: "",
 };
 
 export const bannerSlice = createSlice({
@@ -16,9 +17,13 @@ export const bannerSlice = createSlice({
       state.title = action.payload.title;
       state.slogan = action.payload.slogan;
       state.url = action.payload.url;
+      state.image = action.payload.image; // Ensure image can be null
+    },
+    addBannerImage: (state, action: PayloadAction<string>) => {
+      state.image = action.payload;
     },
   },
 });
 
-export const { addBanner } = bannerSlice.actions;
+export const { addBanner, addBannerImage } = bannerSlice.actions;
 export default bannerSlice.reducer;

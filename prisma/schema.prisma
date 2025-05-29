@@ -29,5 +29,6 @@ model Banner {
   title     String
   slogan    String
   url       String
+  image     String?
   createdAt DateTime @default(now())
 }

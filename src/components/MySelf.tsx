@@ -44,17 +44,20 @@ export default function MySelf() {
     setMounted(true);
 
     const createNewUser = async () => {
-      try {
-        const res = await axios.get("/api/user");
-        dispatch(addUser(res.data));
-      } catch (error: any) {
-        toast.error(
-          error.response.data.error ||
-            "An error occurred while fetching user data",
-          {
-            position: "bottom-right",
-          }
-        );
+      if (clerkUser != null) {
+        try {
+          const res = await axios.get("/api/user");
+
+          dispatch(addUser(res.data));
+        } catch (error: any) {
+          toast.error(
+            error.response.data.error ||
+              "An error occurred while fetching user data",
+            {
+              position: "bottom-right",
+            }
+          );
+        }
       }
     };
 
@@ -63,8 +66,10 @@ export default function MySelf() {
 
   useEffect(() => {
     const createNewUser = async () => {
-      const res = await axios.get("/api/user");
-      dispatch(addUser(res.data));
+      if (clerkUser != null) {
+        const res = await axios.get("/api/user");
+        dispatch(addUser(res.data));
+      }
     };
 
     createNewUser();

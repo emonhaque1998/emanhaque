@@ -30,7 +30,12 @@ export default function Banner() {
   }, []);
   return (
     <div className="px-10 max-md:px-0 w-full absolute max-md:static top-20">
-      <div className="relative h-screen bg-no-repeat z-10 bg-cover bg-[url(https://img.freepik.com/free-photo/green-park-view_1417-1494.jpg?semt=ais_hybrid&w=740)]">
+      <div
+        className={`relative h-screen bg-no-repeat z-10 bg-cover bg-[url(${
+          banner.image ||
+          "https://img.freepik.com/free-photo/green-park-view_1417-1494.jpg?semt=ais_hybrid&w=740"
+        })]`}
+      >
         <div className="absolute inset-0 bg-black/50 -z-10"></div>
         <div className="flex flex-col items-center justify-center h-full z-10">
           <div className="w-4/12 max-md:w-full ml-20 max-md:ml-0 max-md:px-5 flex flex-col gap-5">

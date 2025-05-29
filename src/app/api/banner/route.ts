@@ -31,29 +31,29 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  const { title, slogan, url } = parseResult.data;
+  const { title, slogan, url, image } = parseResult.data;
 
   try {
     const existingBanner = await prisma.banner.findFirst();
 
-    if (existingBanner) {
+    if (existingBanner != null) {
       const banner = await prisma.banner.update({
         where: { id: existingBanner.id },
-        data: { title, slogan, url },
+        data: { title, slogan, url, image },
       });
       return NextResponse.json(
         { success: "Banner is Updated", data: banner },
         { status: 201 }
       );
+    } else {
+      const banner = await prisma.banner.create({
+        data: { title, slogan, url, image },
+      });
+      return NextResponse.json(
+        { banner, success: "Banner is updated" },
+        { status: 201 }
+      );
     }
-
-    const banner = await prisma.banner.create({
-      data: { title, slogan, url },
-    });
-    return NextResponse.json(
-      { banner, success: "Banner is updated" },
-      { status: 201 }
-    );
   } catch (error) {
     console.error("Prisma error:", error);
     return NextResponse.json({ error: "Database error" }, { status: 500 });
