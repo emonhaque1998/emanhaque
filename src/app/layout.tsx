@@ -39,7 +39,6 @@ export default async function RootLayout({
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
-          <ScrollToTop />
           <ThemeProvider
             attribute="class"
             defaultTheme="light"
