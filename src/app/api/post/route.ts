@@ -40,9 +40,18 @@ export async function POST(req: NextRequest) {
   }
 }
 
-export async function GET() {
+export async function GET(req: NextRequest) {
+  const { searchParams } = new URL(req.url);
+  const takeParam = searchParams.get("take");
+  const take = takeParam ? parseInt(takeParam) : 2; // Default to 2 if not provided
+
   try {
-    const allPost = await prisma.post.findMany();
+    const allPost = await prisma.post.findMany({
+      take,
+      include: {
+        user: true,
+      },
+    });
     return NextResponse.json({ allPost, msg: "Post created" }, { status: 200 });
   } catch (error) {
     console.error("Prisma error:", error);

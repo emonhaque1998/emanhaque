@@ -1,9 +1,18 @@
 // store/counterSlice.ts
 import { PostInput } from "@/lib/postSchema";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { UserType } from "@/types/allTypes";
+
+interface PostType {
+  title: string;
+  content?: string;
+  createdAt: string;
+  userId: string;
+  user: UserType;
+}
 
 interface PostState {
-  data?: PostInput[] | null;
+  data?: PostType[] | null;
 }
 
 const initialState: PostState = {
@@ -14,10 +23,10 @@ export const postSlice = createSlice({
   name: "postSlice",
   initialState,
   reducers: {
-    addPost: (state, action: PayloadAction<PostInput>) => {
+    addPost: (state, action: PayloadAction<PostType>) => {
       state.data?.push(action.payload);
     },
-    addAllPost: (state, action: PayloadAction<PostInput[]>) => {
+    addAllPost: (state, action: PayloadAction<PostType[]>) => {
       state.data = action.payload;
     },
   },

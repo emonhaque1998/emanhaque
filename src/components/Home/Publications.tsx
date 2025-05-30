@@ -1,4 +1,5 @@
 "use client";
+
 import Image from "next/image";
 import TitleHeader from "../TitleHeader";
 import HorizontalRowDotted from "../HorizontalRowDotted";
@@ -6,15 +7,16 @@ import { useAppSelector, useAppDispatch } from "@/store/hooks";
 import { useEffect } from "react";
 import axios from "axios";
 import { addAllPost } from "@/store/postSlice";
+import { format } from "date-fns";
 
-export default function Publications() {
+export default function Publications({ take }: { take: number }) {
   const allPost = useAppSelector((state) => state.postSlice.data);
   console.log(allPost);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     const getAllPost = async () => {
-      const res = await axios.get("/api/post");
+      const res = await axios.get(`/api/post?take=${take}`);
 
       dispatch(addAllPost(res.data.allPost));
     };
@@ -69,9 +71,9 @@ export default function Publications() {
                         <HorizontalRowDotted />
                         <div>
                           <span className="text-gray-500">
-                            September 24, 2020 |{" "}
+                            {format(new Date(post.createdAt), "dd-MM-yyyy")}{" "}
                             <span className="text-red-600 dark:text-[#70ba65]">
-                              Admin
+                              {post.user.name}
                             </span>
                           </span>
                         </div>

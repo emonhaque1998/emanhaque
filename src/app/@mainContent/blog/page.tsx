@@ -1,4 +1,5 @@
 import CategoryItems from "@/components/Blog/CategoryItems";
+import Publications from "@/components/Home/Publications";
 import TopDivision from "@/components/TopDivision";
 
 const categoryItems = [
@@ -25,6 +26,7 @@ export default function Blog() {
       <TopDivision>
         <CategoryItems categoryItems={categoryItems} />
       </TopDivision>
+      <Publications take={6} />
     </>
   );
 }
