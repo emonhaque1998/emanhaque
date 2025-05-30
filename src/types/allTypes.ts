@@ -7,3 +7,12 @@ export interface UserType {
   image?: string;
   createdAt: Date;
 }
+
+export interface PostType {
+  title: string;
+  content?: string;
+  slug: string;
+  createdAt: string;
+  userId: string;
+  user: UserType;
+}

@@ -6,6 +6,7 @@ import { UserType } from "@/types/allTypes";
 interface PostType {
   title: string;
   content?: string;
+  slug: string;
   createdAt: string;
   userId: string;
   user: UserType;

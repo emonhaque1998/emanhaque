@@ -18,13 +18,14 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  const { title, content, userId } = parseResult.data;
+  const { title, content, userId, slug } = parseResult.data;
 
   try {
     const newPost = await prisma.post.create({
       data: {
         title,
         content,
+        slug,
         user: {
           connect: { id: userId },
         },

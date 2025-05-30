@@ -44,6 +44,7 @@ model Banner {
 model Post {
   id        String   @id @default(cuid())
   title     String
+  slug      String    @unique
   content   String?
   createdAt DateTime @default(now())
   userId    String

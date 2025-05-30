@@ -8,6 +8,7 @@ import { useEffect } from "react";
 import axios from "axios";
 import { addAllPost } from "@/store/postSlice";
 import { format } from "date-fns";
+import Link from "next/link";
 
 export default function Publications({ take }: { take: number }) {
   const allPost = useAppSelector((state) => state.postSlice.data);
@@ -42,13 +43,15 @@ export default function Publications({ take }: { take: number }) {
                   >
                     <div className="flex flex-col gap-5">
                       <div>
-                        <Image
-                          src="/assets/images/banner.jpg"
-                          width={500}
-                          height={0}
-                          alt="blog banner"
-                          className="w-full rounded-lg"
-                        />
+                        <Link href={`/blog/${post.slug}`}>
+                          <Image
+                            src="/assets/images/banner.jpg"
+                            width={500}
+                            height={0}
+                            alt="blog banner"
+                            className="w-full rounded-lg"
+                          />
+                        </Link>
                       </div>
                       <div className="px-10">
                         <div className="flex flex-row gap-2">

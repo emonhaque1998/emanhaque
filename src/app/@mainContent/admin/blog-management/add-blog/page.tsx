@@ -2,7 +2,7 @@
 import * as motion from "motion/react-client";
 import { AnimatePresence, usePresenceData, wrap } from "motion/react";
 import MainContainer from "@/components/MainContainer";
-import { useState } from "react";
+import React, { useState } from "react";
 import { currentUser } from "@clerk/nextjs/server";
 import axios from "axios";
 import { useAppSelector, useAppDispatch } from "@/store/hooks";
@@ -11,8 +11,20 @@ import toast from "react-hot-toast";
 
 export default function AddBlog() {
   const [showLoading, setLoading] = useState(false);
+  const [slug, setSlug] = useState("");
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.userSlice.user);
+
+  const titleToSlug = (post: string) => {
+    const postSlug = post
+      .toLowerCase()
+      .trim()
+      .replace(/[^\w\s-]/g, "") // Remove non-word characters
+      .replace(/\s+/g, "-") // Replace spaces with hyphens
+      .replace(/--+/g, "-"); // Replace multiple hyphens with a single one
+
+    setSlug(postSlug);
+  };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -22,6 +34,7 @@ export default function AddBlog() {
     const data = {
       title: formData.get("title"),
       userId: user?.id,
+      slug: slug,
     };
 
     const res = await axios.post("/api/post", data);
@@ -66,28 +79,33 @@ export default function AddBlog() {
                   <input
                     type="text"
                     name="title"
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                      return titleToSlug(e.target.value);
+                    }}
                     id="title"
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="Place your title here"
                     required
                   />
                 </div>
-                {/* <div>
+                <div>
                   <label
-                    htmlFor="slogan"
+                    htmlFor="slug"
                     className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                   >
-                    Slogan
+                    Slug
                   </label>
                   <input
                     type="text"
-                    id="slogan"
-                    name="slogan"
+                    id="slug"
+                    disabled={true}
+                    name="slug"
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Place your slogan here"
+                    placeholder="Place your Slug here"
                     required
+                    value={slug}
                   />
-                </div> */}
+                </div>
               </div>
 
               <button
