@@ -3,12 +3,14 @@ import { configureStore } from "@reduxjs/toolkit";
 import userReducer from "./userSlice";
 import bannerReducer from "./bannerSlice";
 import postReducer from "./postSlice";
+import categoryReducer from "./categorySlice";
 
 export const store = configureStore({
   reducer: {
     userSlice: userReducer,
     bannerSlice: bannerReducer,
     postSlice: postReducer,
+    categorySlice: categoryReducer,
   },
 });
 

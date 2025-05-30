@@ -49,3 +49,10 @@ model Post {
   userId    String
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
+
+model Category{
+  id    String  @id @default(cuid())
+  categoryName  String
+  categorySlug  String
+  createdAt DateTime @default(now())
+}
