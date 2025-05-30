@@ -10,6 +10,9 @@ export const bannerSchema = z.object({
   linkdin: z.string().url().optional(),
   github: z.string().url().optional(),
   facebook: z.string().url().optional(),
+  awardsCount: z.number().optional(),
+  projectCount: z.number().optional(),
+  coustomerCount: z.number().optional(),
 });
 
 export type BannerInput = z.infer<typeof bannerSchema>;

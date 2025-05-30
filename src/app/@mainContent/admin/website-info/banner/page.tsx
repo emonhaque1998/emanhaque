@@ -30,6 +30,9 @@ export default function Page() {
       facebook: formData.get("facebook"),
       linkdin: formData.get("linkdin"),
       github: formData.get("github"),
+      projectCount: Number(formData.get("projectCount")),
+      coustomerCount: Number(formData.get("coustomerCount")),
+      awardsCount: Number(formData.get("awardsCount")),
     };
 
     const res = await axios.post("/api/banner", data);
@@ -99,6 +102,54 @@ export default function Page() {
                     defaultValue={banner?.slogan} // Pre-fill with existing slogan
                   />
                 </div>
+                <div>
+                  <label
+                    htmlFor="projectCount"
+                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  >
+                    Complete Project
+                  </label>
+                  <input
+                    type="number"
+                    name="projectCount"
+                    id="projectCount"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    required
+                    defaultValue={banner?.projectCount} // Pre-fill with existing title
+                  />
+                </div>
+                <div>
+                  <label
+                    htmlFor="coustomerCount"
+                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  >
+                    Happy Customer
+                  </label>
+                  <input
+                    type="number"
+                    name="coustomerCount"
+                    id="coustomerCount"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    required
+                    defaultValue={banner?.coustomerCount} // Pre-fill with existing title
+                  />
+                </div>
+              </div>
+              <div className="mb-6">
+                <label
+                  htmlFor="awardsCount"
+                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >
+                  Awards Count
+                </label>
+                <input
+                  type="number"
+                  id="awardsCount"
+                  name="awardsCount"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  required
+                  defaultValue={banner?.awardsCount} // Pre-fill with existing URL
+                />
               </div>
               <div className="mb-6">
                 <label

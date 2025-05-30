@@ -1,8 +1,9 @@
 import WebsiteInformation from "@/components/admin/WebsiteInformation";
 
 const navItems = [
-  { name: "Banner", path: "/admin/website-info/banner" },
-  { name: "Social Media", path: "/admin/website-info/social-media" },
+  { name: "Add Blog", path: "/admin/blog-management/add-blog" },
+  { name: "All Category", path: "/admin/blog-management/all-category" },
+  { name: "Add Category", path: "/admin/blog-management/add-category" },
 ];
 
 export default function WebsiteLayout({

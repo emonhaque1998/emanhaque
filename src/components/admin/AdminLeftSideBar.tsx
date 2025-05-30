@@ -22,7 +22,7 @@ export default function AdminLeftSideBar() {
             <Link
               href={item.path}
               className={`block ${
-                pathName === item.path
+                pathName.startsWith(item.path)
                   ? "text-[#70ba65] dark:text-[#70ba65]"
                   : "text-[#00283a] dark:text-white"
               } px-4 py-1 hover:bg-gray-200 dark:hover:bg-black/20 hover:text-[#00283a] dark:hover:text-white rounded`}

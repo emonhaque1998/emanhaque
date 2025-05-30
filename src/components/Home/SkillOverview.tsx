@@ -1,13 +1,16 @@
+"use client";
 import HorizontalRowDotted from "@/components/HorizontalRowDotted";
 import { FaPlus } from "react-icons/fa6";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
 
 export default function SkillOverview() {
+  const banner = useAppSelector((state) => state.bannerSlice.data);
   return (
     <div className="flex flex-row w-full justify-between gap-3 max-md:flex-col max-md:-mt-20">
       <div className="bg-[#fcfcfe] rounded-lg shadow-lg dark:bg-[#00283a] py-10 px-10 flex-1 flex-col justify-center flex items-center">
         <div className="flex flex-row justify-center gap-1 items-center">
           <span className="text-[#00283a] dark:text-white text-2xl font-bold">
-            74
+            {banner?.projectCount || 0}
           </span>
           <span className="text-[#70ba65] text-md">
             <FaPlus />
@@ -22,7 +25,7 @@ export default function SkillOverview() {
       <div className="bg-[#fcfcfe] rounded-lg shadow-lg dark:bg-[#00283a] py-10 px-10 flex-1 flex-col justify-center flex items-center">
         <div className="flex flex-row justify-center gap-1 items-center">
           <span className="text-[#00283a] dark:text-white text-2xl font-bold">
-            74
+            {banner?.coustomerCount || 0}
           </span>
           <span className="text-[#70ba65] text-md">
             <FaPlus />
@@ -37,7 +40,7 @@ export default function SkillOverview() {
       <div className="bg-[#fcfcfe] rounded-lg shadow-lg dark:bg-[#00283a] py-10 px-10 flex-1 flex-col justify-center flex items-center">
         <div className="flex flex-row justify-center gap-1 items-center">
           <span className="text-[#00283a] dark:text-white text-2xl font-bold">
-            74
+            {banner?.awardsCount || 0}
           </span>
           <span className="text-[#70ba65] text-md">
             <FaPlus />

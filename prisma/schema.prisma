@@ -21,6 +21,7 @@ model User {
   name      String?
   role      String?   @default("user")
   image     String?
+  post      Post[]
   createdAt DateTime @default(now())
 }
 
@@ -34,5 +35,17 @@ model Banner {
   github   String?
   facebook String?
   youtube String?
+  awardsCount Int? @default(0)
+  projectCount Int? @default(0)
+  coustomerCount Int? @default(0)
   createdAt DateTime @default(now())
+}
+
+model Post {
+  id        String   @id @default(cuid())
+  title     String
+  content   String?
+  createdAt DateTime @default(now())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

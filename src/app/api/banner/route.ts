@@ -31,8 +31,19 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  const { title, slogan, url, image, youtube, facebook, github, linkdin } =
-    parseResult.data;
+  const {
+    title,
+    slogan,
+    url,
+    image,
+    youtube,
+    facebook,
+    github,
+    linkdin,
+    projectCount,
+    awardsCount,
+    coustomerCount,
+  } = parseResult.data;
 
   try {
     const existingBanner = await prisma.banner.findFirst();
@@ -50,6 +61,9 @@ export async function POST(req: NextRequest) {
             facebook,
             github,
             linkdin,
+            coustomerCount,
+            projectCount,
+            awardsCount,
           },
         });
         return NextResponse.json(
@@ -67,6 +81,9 @@ export async function POST(req: NextRequest) {
           facebook,
           github,
           linkdin,
+          coustomerCount,
+          projectCount,
+          awardsCount,
         },
       });
       return NextResponse.json(
@@ -75,7 +92,19 @@ export async function POST(req: NextRequest) {
       );
     } else {
       const banner = await prisma.banner.create({
-        data: { title, slogan, url, image, youtube, facebook, github, linkdin },
+        data: {
+          title,
+          slogan,
+          url,
+          image,
+          youtube,
+          facebook,
+          github,
+          linkdin,
+          coustomerCount,
+          projectCount,
+          awardsCount,
+        },
       });
       return NextResponse.json(
         { banner, success: "Banner is updated" },
