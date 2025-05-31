@@ -8,7 +8,7 @@ export const getSinglePost = async (slug: string) => {
   }
 
   try {
-    const postData = await prisma.post.findUnique({
+    const postData = await prisma.post.findFirst({
       where: {
         slug,
       },
@@ -23,6 +23,6 @@ export const getSinglePost = async (slug: string) => {
       return { success: true, post };
     }
   } catch (error) {
-    return error;
+    return { success: false, error };
   }
 };

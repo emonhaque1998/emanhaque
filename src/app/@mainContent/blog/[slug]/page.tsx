@@ -23,9 +23,9 @@ export default function SinglePost({
   useEffect(() => {
     const post = async () => {
       const singlePost = await getSinglePost(slug);
-      // if (singlePost?.success) {
-      //   dispatch(addPost(singlePost.post));
-      // }
+      if (singlePost?.success) {
+        dispatch(addPost(singlePost.post));
+      }
       console.log(singlePost);
     };
 
