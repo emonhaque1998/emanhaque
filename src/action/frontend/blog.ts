@@ -17,10 +17,8 @@ export const getSinglePost = async (slug: string) => {
       },
     });
 
-    const post = JSON.parse(JSON.stringify(postData));
-
-    if (post) {
-      return { success: true, post };
+    if (postData) {
+      return { success: true, postData };
     }
   } catch (error) {
     return { success: false, error };
