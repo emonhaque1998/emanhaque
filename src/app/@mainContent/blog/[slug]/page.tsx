@@ -5,30 +5,28 @@ import { use, useEffect } from "react";
 import { SlCalender } from "react-icons/sl";
 import { FaRegClock } from "react-icons/fa";
 import { RxAvatar } from "react-icons/rx";
-import { getSinglePost } from "@/action/frontend/blog";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { addPost } from "@/store/singlePost";
 import { format } from "date-fns";
+import axios from "axios";
 
 export default function SinglePost({
   params,
 }: {
   params: Promise<{ slug: string }>;
 }) {
-  const dispatch = useAppDispatch();
-  const { slug } = use(params);
-
   const post = useAppSelector((state) => state.singlePostSlice.data);
+  const dispatch = useAppDispatch();
+
+  const { slug } = use(params);
 
   useEffect(() => {
     const post = async () => {
-      const singlePost = await getSinglePost(slug);
-      // if (singlePost?.success) {
-      //   dispatch(addPost(singlePost.post));
-      // }
-      console.log(singlePost);
+      const res = await axios.get(`/api/post/${slug}`);
+      if (res.data.success) {
+        dispatch(addPost(res.data.post));
+      }
     };
-
     post();
   }, []);
   return (
