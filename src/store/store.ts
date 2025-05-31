@@ -4,6 +4,7 @@ import userReducer from "./userSlice";
 import bannerReducer from "./bannerSlice";
 import postReducer from "./postSlice";
 import categoryReducer from "./categorySlice";
+import singlePostSlice from "./singlePost";
 
 export const store = configureStore({
   reducer: {
@@ -11,6 +12,7 @@ export const store = configureStore({
     bannerSlice: bannerReducer,
     postSlice: postReducer,
     categorySlice: categoryReducer,
+    singlePostSlice,
   },
 });
 

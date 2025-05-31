@@ -10,7 +10,7 @@ export interface UserType {
 
 export interface PostType {
   title: string;
-  content?: string;
+  content?: string | null;
   slug: string;
   createdAt: string;
   userId: string;
