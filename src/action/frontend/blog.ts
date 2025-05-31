@@ -7,18 +7,22 @@ export const getSinglePost = async (slug: string) => {
     return { error: "Slug Not found" };
   }
 
-  const postData = await prisma.post.findUnique({
-    where: {
-      slug,
-    },
-    include: {
-      user: true,
-    },
-  });
+  try {
+    const postData = await prisma.post.findUnique({
+      where: {
+        slug,
+      },
+      include: {
+        user: true,
+      },
+    });
 
-  const post = JSON.parse(JSON.stringify(postData));
+    const post = JSON.parse(JSON.stringify(postData));
 
-  if (post) {
-    return { success: true, post };
+    if (post) {
+      return { success: true, post };
+    }
+  } catch (error) {
+    return error;
   }
 };
