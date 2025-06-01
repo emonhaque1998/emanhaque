@@ -5,6 +5,7 @@ export const postSchema = z.object({
   slug: z.string().min(1, "Slug is required"),
   content: z.string().optional(),
   userId: z.string().cuid("Invalid user ID"), // Must match Prisma's cuid format
+  categoryId: z.string().cuid("Invalid user ID"), // Must match Prisma's cuid format
 });
 
 export type PostInput = z.infer<typeof postSchema>;

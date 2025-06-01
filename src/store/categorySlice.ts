@@ -1,18 +1,10 @@
 // store/counterSlice.ts
-import { CategoryInput } from "@/lib/categorySchema";
+import { CategoryType } from "@/types/allTypes";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { UserType } from "@/types/allTypes";
 
-// interface PostType {
-//   title: string;
-//   content?: string;
-//   createdAt: string;
-//   userId: string;
-//   user: UserType;
-// }
-
 interface CategoryState {
-  data?: CategoryInput[] | null;
+  data?: CategoryType[] | null;
 }
 
 const initialState: CategoryState = {
@@ -23,10 +15,10 @@ export const categorySlice = createSlice({
   name: "categorySlice",
   initialState,
   reducers: {
-    addCategory: (state, action: PayloadAction<CategoryInput>) => {
+    addCategory: (state, action: PayloadAction<CategoryType>) => {
       state.data?.push(action.payload);
     },
-    addAllCategory: (state, action: PayloadAction<CategoryInput[]>) => {
+    addAllCategory: (state, action: PayloadAction<CategoryType[]>) => {
       state.data = action.payload;
     },
   },

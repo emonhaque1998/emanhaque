@@ -67,6 +67,18 @@ export default function SinglePost({
           </div>
         </MainContainer>
       </TopDivision>
+      <div className="mt-10">
+        <MainContainer>
+          <h1>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad,
+            tenetur laborum cupiditate ipsum laudantium exercitationem
+            excepturi. Iste consequatur maxime fuga officia commodi in rem
+            facere magnam error quos nisi facilis dolores distinctio itaque
+            asperiores corporis quasi, harum sed voluptatibus ipsum expedita
+            laudantium! Ipsam at vel tenetur ex modi officia possimus?
+          </h1>
+        </MainContainer>
+      </div>
     </>
   );
 }

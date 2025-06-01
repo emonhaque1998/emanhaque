@@ -18,7 +18,7 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  const { title, content, userId, slug } = parseResult.data;
+  const { title, content, userId, slug, categoryId } = parseResult.data;
 
   try {
     const newPost = await prisma.post.create({
@@ -28,6 +28,9 @@ export async function POST(req: NextRequest) {
         slug,
         user: {
           connect: { id: userId },
+        },
+        category: {
+          connect: { id: categoryId },
         },
       },
       include: {

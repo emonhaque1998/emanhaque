@@ -27,7 +27,7 @@ export default function AllCategory() {
       categorySlug: slug,
     };
 
-    const res = await axios.post("/api/category", data);
+    const res = await axios.post("/api/post/category", data);
 
     if (res.status === 200) {
       console.log(res.data.category);
@@ -53,7 +53,7 @@ export default function AllCategory() {
 
   useEffect(() => {
     const getAllCategory = async () => {
-      const res = await axios.get(`/api/category?take=10`);
+      const res = await axios.get(`/api/post/category?take=10`);
 
       if (res.status === 200) {
         dispatch(addAllCategory(res.data.allCategory));

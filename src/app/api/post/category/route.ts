@@ -40,6 +40,17 @@ export async function POST(req: NextRequest) {
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const takeParam = searchParams.get("take");
+
+  if (!takeParam) {
+    try {
+      const allCategory = await prisma.category.findMany();
+      return NextResponse.json({ allCategory }, { status: 200 });
+    } catch (error) {
+      console.error("Prisma error:", error);
+      return NextResponse.json({ error: "Database error" }, { status: 500 });
+    }
+  }
+
   const take = takeParam ? parseInt(takeParam) : 10; // Default to 2 if not provided
 
   try {
