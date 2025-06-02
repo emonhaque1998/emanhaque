@@ -131,7 +131,8 @@ body {
 .ProseMirror {
   outline: none;
   min-height: 300px;
-  padding: 0.5rem;
+  padding: 1.5rem;
+  padding-top: 0.5rem;
   border: 1px solid #ccc;
   border-radius: 4px;
 }
@@ -142,4 +143,8 @@ button {
 .tiptap h1 {
   font-weight: bold;
   font-size: 22px;
+}
+
+.tiptap ul {
+  list-style: circle;
 }
