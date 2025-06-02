@@ -238,6 +238,12 @@ export default function AddBlog() {
                     H2
                   </button>
                   <button
+                    onClick={() => editor?.chain().focus().setParagraph().run()}
+                    className="px-2 py-1 border rounded"
+                  >
+                    Paragraph
+                  </button>
+                  <button
                     onClick={() =>
                       editor?.chain().focus().toggleBulletList().run()
                     }
