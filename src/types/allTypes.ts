@@ -13,15 +13,15 @@ export interface PostType {
   content?: string | null;
   slug: string;
   createdAt: string;
-  userId?: string;
-  user?: UserType;
-  categoryId?: string;
-  category?: CategoryType;
+  userId: string;
+  user: UserType;
+  categoryId: string;
+  category: CategoryType;
 }
 
 export interface CategoryType {
   id: string;
   categoryName: string;
   categorySlug: string;
-  post?: PostType;
+  post: PostType;
 }

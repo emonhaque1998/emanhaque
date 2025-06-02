@@ -56,16 +56,7 @@ export default function Publications({ take }: { take: number }) {
                       <div className="px-10">
                         <div className="flex flex-row gap-2">
                           <span className="text-gray-500 uppercase">
-                            Design{" "}
-                            <span className="dark:text-white text-black">
-                              ,
-                            </span>
-                          </span>
-                          <span className="text-gray-500 uppercase">
-                            Design{" "}
-                            <span className="dark:text-white text-black">
-                              ,
-                            </span>
+                            {post.category.categoryName}
                           </span>
                         </div>
                         <div>

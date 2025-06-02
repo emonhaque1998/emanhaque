@@ -35,6 +35,7 @@ export async function POST(req: NextRequest) {
       },
       include: {
         user: true,
+        category: true,
       },
     });
     return NextResponse.json({ newPost, msg: "Post created" }, { status: 200 });
@@ -54,6 +55,7 @@ export async function GET(req: NextRequest) {
       take,
       include: {
         user: true,
+        category: true,
       },
     });
     return NextResponse.json({ allPost, msg: "Post created" }, { status: 200 });

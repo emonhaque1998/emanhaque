@@ -1,16 +1,7 @@
 // store/counterSlice.ts
 import { PostInput } from "@/lib/postSchema";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { UserType } from "@/types/allTypes";
-
-interface PostType {
-  title: string;
-  content?: string;
-  slug: string;
-  createdAt: string;
-  userId: string;
-  user: UserType;
-}
+import { PostType } from "@/types/allTypes";
 
 interface PostState {
   data?: PostType[] | null;
