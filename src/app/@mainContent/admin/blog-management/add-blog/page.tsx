@@ -9,6 +9,17 @@ import { useAppSelector, useAppDispatch } from "@/store/hooks";
 import { addPost } from "@/store/postSlice";
 import { addAllCategory } from "@/store/categorySlice";
 import toast from "react-hot-toast";
+import { useEditor, EditorContent } from "@tiptap/react";
+import StarterKit from "@tiptap/starter-kit";
+import Heading from "@tiptap/extension-heading";
+import Bold from "@tiptap/extension-bold";
+import Italic from "@tiptap/extension-italic";
+import BulletList from "@tiptap/extension-bullet-list";
+import OrderedList from "@tiptap/extension-ordered-list";
+import ListItem from "@tiptap/extension-list-item";
+import Image from "@tiptap/extension-image";
+import Paragraph from "@tiptap/extension-paragraph";
+import Underline from "@tiptap/extension-underline";
 
 export default function AddBlog() {
   const [showLoading, setLoading] = useState(false);
@@ -16,6 +27,52 @@ export default function AddBlog() {
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.userSlice.user);
   const categories = useAppSelector((state) => state.categorySlice.data);
+
+  const editor = useEditor({
+    extensions: [
+      StarterKit.configure({
+        heading: false, // disable default heading
+      }),
+      Heading.configure({
+        levels: [1, 2, 3],
+      }),
+      Bold,
+      Italic,
+      BulletList,
+      OrderedList,
+      ListItem,
+      Image,
+      Underline,
+      Paragraph,
+    ],
+    content: "",
+  });
+
+  const handleImageUpload = async () => {
+    const input = document.createElement("input");
+    input.type = "file";
+    input.accept = "image/*";
+    input.onchange = async () => {
+      const file = input.files?.[0];
+      if (!file) return;
+
+      // Optional: Upload the file via UploadThing or other service
+      // For demo, let's assume you have an API route that returns an image URL after upload:
+      const formData = new FormData();
+      formData.append("file", file);
+
+      const res = await fetch("/api/upload", {
+        method: "POST",
+        body: formData,
+      });
+
+      const data = await res.json();
+      if (data.url) {
+        editor?.chain().focus().setImage({ src: data.url }).run();
+      }
+    };
+    input.click();
+  };
 
   const titleToSlug = (post: string) => {
     const postSlug = post
@@ -140,6 +197,75 @@ export default function AddBlog() {
                       );
                     })}
                 </select>
+              </div>
+              <div>
+                {/* Toolbar */}
+                <div className="flex flex-wrap gap-2 mb-2">
+                  <button
+                    onClick={() => editor?.chain().focus().toggleBold().run()}
+                    className="px-2 py-1 border rounded"
+                  >
+                    Bold
+                  </button>
+                  <button
+                    onClick={() => editor?.chain().focus().toggleItalic().run()}
+                    className="px-2 py-1 border rounded"
+                  >
+                    Italic
+                  </button>
+                  <button
+                    onClick={() =>
+                      editor?.chain().focus().toggleUnderline().run()
+                    }
+                    className="px-2 py-1 border rounded"
+                  >
+                    Underline
+                  </button>
+                  <button
+                    onClick={() =>
+                      editor?.chain().focus().toggleHeading({ level: 1 }).run()
+                    }
+                    className="px-2 py-1 border rounded"
+                  >
+                    H1
+                  </button>
+                  <button
+                    onClick={() =>
+                      editor?.chain().focus().toggleHeading({ level: 2 }).run()
+                    }
+                    className="px-2 py-1 border rounded"
+                  >
+                    H2
+                  </button>
+                  <button
+                    onClick={() =>
+                      editor?.chain().focus().toggleBulletList().run()
+                    }
+                    className="px-2 py-1 border rounded"
+                  >
+                    Bullet List
+                  </button>
+                  <button
+                    onClick={() =>
+                      editor?.chain().focus().toggleOrderedList().run()
+                    }
+                    className="px-2 py-1 border rounded"
+                  >
+                    Ordered List
+                  </button>
+                  <button
+                    onClick={handleImageUpload}
+                    className="px-2 py-1 border rounded"
+                  >
+                    Add Image
+                  </button>
+                </div>
+
+                {/* Editor */}
+                <EditorContent
+                  editor={editor}
+                  className="border rounded p-2 min-h-[300px]"
+                />
               </div>
               <button
                 type="submit"

@@ -127,3 +127,19 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+.ProseMirror {
+  outline: none;
+  min-height: 300px;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+button {
+  cursor: pointer;
+}
+
+.tiptap h1 {
+  font-weight: bold;
+  font-size: 22px;
+}
