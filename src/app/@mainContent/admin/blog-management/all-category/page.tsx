@@ -8,6 +8,7 @@ import axios from "axios";
 import { useAppSelector, useAppDispatch } from "@/store/hooks";
 import { addCategory, addAllCategory } from "@/store/categorySlice";
 import toast from "react-hot-toast";
+import EditDeleteButton from "@/components/admin/EditDeleteButton";
 
 export default function AllCategory() {
   const [showLoading, setLoading] = useState(false);
@@ -184,13 +185,8 @@ export default function AllCategory() {
                               {category.categorySlug}
                             </td>
 
-                            <td className="px-6 py-4 text-center">
-                              <a
-                                href="#"
-                                className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                              >
-                                Edit
-                              </a>
+                            <td className="px-6 py-4 flex flex-row gap-3 justify-center">
+                              <EditDeleteButton id={category.id} />
                             </td>
                           </tr>
                         );
