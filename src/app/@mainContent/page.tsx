@@ -1,3 +1,4 @@
+"use client";
 import Footer from "@/components/Footer";
 import MyService from "@/components/Home/MyService";
 import MyStory from "@/components/Home/MyStory";
