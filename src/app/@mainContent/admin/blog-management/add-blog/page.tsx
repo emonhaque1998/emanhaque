@@ -20,10 +20,14 @@ import ListItem from "@tiptap/extension-list-item";
 import Image from "@tiptap/extension-image";
 import Paragraph from "@tiptap/extension-paragraph";
 import Underline from "@tiptap/extension-underline";
+import { UploadButton } from "@/utils/uploadthing";
+import DOMPurify from "dompurify";
 
 export default function AddBlog() {
   const [showLoading, setLoading] = useState(false);
   const [slug, setSlug] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
+
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.userSlice.user);
   const categories = useAppSelector((state) => state.categorySlice.data);
@@ -48,32 +52,6 @@ export default function AddBlog() {
     content: "",
   });
 
-  const handleImageUpload = async () => {
-    const input = document.createElement("input");
-    input.type = "file";
-    input.accept = "image/*";
-    input.onchange = async () => {
-      const file = input.files?.[0];
-      if (!file) return;
-
-      // Optional: Upload the file via UploadThing or other service
-      // For demo, let's assume you have an API route that returns an image URL after upload:
-      const formData = new FormData();
-      formData.append("file", file);
-
-      const res = await fetch("/api/upload", {
-        method: "POST",
-        body: formData,
-      });
-
-      const data = await res.json();
-      if (data.url) {
-        editor?.chain().focus().setImage({ src: data.url }).run();
-      }
-    };
-    input.click();
-  };
-
   const titleToSlug = (post: string) => {
     const postSlug = post
       .toLowerCase()
@@ -92,6 +70,7 @@ export default function AddBlog() {
     const formData = new FormData(e.currentTarget);
     const data = {
       title: formData.get("title"),
+      content: DOMPurify.sanitize(editor?.getHTML() ? editor?.getHTML() : ""),
       userId: user?.id,
       slug: slug,
       categoryId: formData.get("categoryId"),
@@ -202,69 +181,94 @@ export default function AddBlog() {
                 {/* Toolbar */}
                 <div className="flex flex-wrap gap-2 mb-2">
                   <button
-                    onClick={() => editor?.chain().focus().toggleBold().run()}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      editor?.chain().focus().toggleBold().run();
+                    }}
                     className="px-2 py-1 border rounded"
                   >
                     Bold
                   </button>
                   <button
-                    onClick={() => editor?.chain().focus().toggleItalic().run()}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      editor?.chain().focus().toggleItalic().run();
+                    }}
                     className="px-2 py-1 border rounded"
                   >
                     Italic
                   </button>
                   <button
-                    onClick={() =>
-                      editor?.chain().focus().toggleUnderline().run()
-                    }
+                    onClick={(e) => {
+                      e.preventDefault();
+                      editor?.chain().focus().toggleUnderline().run();
+                    }}
                     className="px-2 py-1 border rounded"
                   >
                     Underline
                   </button>
                   <button
-                    onClick={() =>
-                      editor?.chain().focus().toggleHeading({ level: 1 }).run()
-                    }
+                    onClick={(e) => {
+                      e.preventDefault();
+                      editor?.chain().focus().toggleHeading({ level: 1 }).run();
+                    }}
                     className="px-2 py-1 border rounded"
                   >
                     H1
                   </button>
                   <button
-                    onClick={() =>
-                      editor?.chain().focus().toggleHeading({ level: 2 }).run()
-                    }
+                    onClick={(e) => {
+                      e.preventDefault();
+                      editor?.chain().focus().toggleHeading({ level: 2 }).run();
+                    }}
                     className="px-2 py-1 border rounded"
                   >
                     H2
                   </button>
                   <button
-                    onClick={() => editor?.chain().focus().setParagraph().run()}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      editor?.chain().focus().setParagraph().run();
+                    }}
                     className="px-2 py-1 border rounded"
                   >
                     Paragraph
                   </button>
                   <button
-                    onClick={() =>
-                      editor?.chain().focus().toggleBulletList().run()
-                    }
+                    onClick={(e) => {
+                      e.preventDefault();
+                      editor?.chain().focus().toggleBulletList().run();
+                    }}
                     className="px-2 py-1 border rounded"
                   >
                     Bullet List
                   </button>
                   <button
-                    onClick={() =>
-                      editor?.chain().focus().toggleOrderedList().run()
-                    }
+                    onClick={(e) => {
+                      e.preventDefault();
+                      editor?.chain().focus().toggleOrderedList().run();
+                    }}
                     className="px-2 py-1 border rounded"
                   >
                     Ordered List
                   </button>
-                  <button
-                    onClick={handleImageUpload}
-                    className="px-2 py-1 border rounded"
-                  >
-                    Add Image
-                  </button>
+
+                  <UploadButton
+                    endpoint="imageUploader"
+                    onClientUploadComplete={(res) => {
+                      // Do something with the response
+                      setImageUrl(res[0].ufsUrl);
+                      editor
+                        ?.chain()
+                        .focus()
+                        .setImage({ src: res[0].ufsUrl })
+                        .run();
+                    }}
+                    onUploadError={(error: Error) => {
+                      // Do something with the error.
+                      alert(`ERROR! ${error.message}`);
+                    }}
+                  />
                 </div>
 
                 {/* Editor */}

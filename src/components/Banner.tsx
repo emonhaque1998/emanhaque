@@ -2,15 +2,16 @@
 
 import Button from "@/components/Button";
 import axios from "axios";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { FaPlay } from "react-icons/fa";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { addBanner } from "@/store/bannerSlice";
+import Loading from "@/app/loading";
 
 export default function Banner() {
   const dispatch = useAppDispatch();
   const banner = useAppSelector((state) => state.bannerSlice.data);
-  console.log("Banner data:", banner);
+
   useEffect(() => {
     const getBanner = async () => {
       const banner = await axios.get("/api/banner");
@@ -23,6 +24,7 @@ export default function Banner() {
 
     getBanner();
   }, []);
+  // Prevent rendering until mounted on client
   return (
     <div className="px-10 max-md:px-0 w-full absolute max-md:static top-20">
       <div

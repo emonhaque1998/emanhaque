@@ -8,6 +8,8 @@ import Script from "next/script";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Toaster } from "react-hot-toast";
 import { ReduxProvider } from "@/components/ReduxProvider";
+import { Suspense } from "react";
+import Loading from "./loading";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -73,7 +75,9 @@ export default async function RootLayout({
                   <Header />
                   <div className="h-24 max-md:hidden"></div>
                   {leftSideBar}
-                  <Banner />
+                  <Suspense fallback={<Loading />}>
+                    <Banner />
+                  </Suspense>
                   <div className="flex justify-end max-md:block max-md:px-5 pr-20 relative -mt-28 max-md:-mt-0 z-10">
                     <div className="flex flex-col w-3/5 max-md:w-full">
                       {mainContent}
