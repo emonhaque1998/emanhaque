@@ -3,12 +3,12 @@ import * as motion from "motion/react-client";
 import { AnimatePresence, usePresenceData, wrap } from "motion/react";
 import MainContainer from "@/components/MainContainer";
 import { useEffect, useState } from "react";
-import { currentUser } from "@clerk/nextjs/server";
 import axios from "axios";
 import { useAppSelector, useAppDispatch } from "@/store/hooks";
 import { addCategory, addAllCategory } from "@/store/categorySlice";
 import toast from "react-hot-toast";
 import EditDeleteButton from "@/components/admin/EditDeleteButton";
+import { titleToSlug } from "@/Extra/titleToSlug";
 
 export default function AllCategory() {
   const [showLoading, setLoading] = useState(false);
@@ -17,7 +17,9 @@ export default function AllCategory() {
 
   const categories = useAppSelector((state) => state.categorySlice.data);
 
-  console.log("show my category", categories);
+  const recivedDataHandler = (data: any) => {
+    dispatch(addAllCategory(data.allCategory));
+  };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -31,7 +33,6 @@ export default function AllCategory() {
     const res = await axios.post("/api/post/category", data);
 
     if (res.status === 200) {
-      console.log(res.data.category);
       dispatch(addCategory(res.data.category));
       toast.success(res.data.msg);
       setLoading(false);
@@ -39,17 +40,6 @@ export default function AllCategory() {
       toast.error(res.data.error || "Something went wrong");
       setLoading(false);
     }
-  };
-
-  const titleToSlug = (category: string) => {
-    const categorySlug = category
-      .toLowerCase()
-      .trim()
-      .replace(/[^\w\s-]/g, "") // Remove non-word characters
-      .replace(/\s+/g, "-") // Replace spaces with hyphens
-      .replace(/--+/g, "-"); // Replace multiple hyphens with a single one
-
-    setSlug(categorySlug);
   };
 
   useEffect(() => {
@@ -95,7 +85,7 @@ export default function AllCategory() {
                       type="text"
                       onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                         e.preventDefault();
-                        titleToSlug(e.target.value);
+                        setSlug(titleToSlug(e.target.value));
                       }}
                       name="categoryName"
                       id="categoryName"
@@ -186,7 +176,11 @@ export default function AllCategory() {
                             </td>
 
                             <td className="px-6 py-4 flex flex-row gap-3 justify-center">
-                              <EditDeleteButton id={category.id} />
+                              <EditDeleteButton
+                                id={category.id}
+                                sendData={recivedDataHandler}
+                                path="post/category"
+                              />
                             </td>
                           </tr>
                         );

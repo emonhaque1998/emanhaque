@@ -1,25 +1,28 @@
 "use client";
 import axios from "axios";
 import toast from "react-hot-toast";
-import { useEffect } from "react";
-import { useAppDispatch } from "@/store/hooks";
-import { addAllCategory } from "@/store/categorySlice";
 
-export default function EditDeleteButton({ id }: { id: string }) {
-  const dispatch = useAppDispatch();
-
-  const getAllCategory = async () => {
-    const res = await axios.get(`/api/post/category?take=10`);
+export default function EditDeleteButton({
+  id,
+  sendData,
+  path,
+}: {
+  id: string;
+  sendData: any;
+  path: string;
+}) {
+  const getAll = async () => {
+    const res = await axios.get(`/api/${path}?take=10`);
 
     if (res.status === 200) {
-      dispatch(addAllCategory(res.data.allCategory));
+      sendData(res.data);
     }
   };
 
   const deleteHandler = async () => {
-    const res = await axios.delete(`/api/post/category/${id}`);
+    const res = await axios.delete(`/api/${path}/${id}`);
     res.data.success
-      ? toast.success(res.data.msg) && getAllCategory()
+      ? toast.success(res.data.msg) && getAll()
       : toast.error("Something wrong!");
   };
 

@@ -1,33 +1,30 @@
 // store/counterSlice.ts
+import { UserType } from "@/types/allTypes";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-interface User {
-  id: string;
-  email: string;
-  name?: string | null;
-  role?: string | null;
-  clerkId: string;
-  image?: string;
-  createdAt: Date;
-}
-
 interface UserState {
-  user?: User | null;
+  user?: UserType | null;
+  allUser?: UserType[] | null;
 }
 
 const initialState: UserState = {
   user: null,
+  allUser: null,
 };
 
 export const userSlice = createSlice({
   name: "userSlice",
   initialState,
   reducers: {
-    addUser: (state, action: PayloadAction<User | null | undefined>) => {
+    addUser: (state, action: PayloadAction<UserType>) => {
       state.user = action.payload;
+    },
+
+    updateAllUser: (state, action: PayloadAction<UserType[]>) => {
+      state.allUser = action.payload;
     },
   },
 });
 
-export const { addUser } = userSlice.actions;
+export const { addUser, updateAllUser } = userSlice.actions;
 export default userSlice.reducer;
