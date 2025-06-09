@@ -16,6 +16,7 @@ export async function GET(
       },
       include: {
         user: true,
+        category: true,
       },
     });
     return NextResponse.json(

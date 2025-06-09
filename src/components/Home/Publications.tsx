@@ -45,7 +45,7 @@ export default function Publications({ take }: { take: number }) {
                       <div>
                         <Link href={`/blog/${post.slug}`}>
                           <Image
-                            src="/assets/images/banner.jpg"
+                            src={post.image}
                             width={500}
                             height={0}
                             alt="blog banner"

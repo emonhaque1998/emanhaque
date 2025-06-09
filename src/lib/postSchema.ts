@@ -2,6 +2,7 @@ import { z } from "zod";
 
 export const postSchema = z.object({
   title: z.string().min(1, "Title is required"),
+  image: z.string().min(1, "Image is requried"),
   slug: z.string().min(1, "Slug is required"),
   content: z.string().optional(),
   userId: z.string().cuid("Invalid user ID"), // Must match Prisma's cuid format

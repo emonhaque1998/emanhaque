@@ -8,6 +8,7 @@ import axios from "axios";
 import { useAppSelector, useAppDispatch } from "@/store/hooks";
 import { addPost } from "@/store/postSlice";
 import toast from "react-hot-toast";
+import AllPost from "@/components/admin/AllPost";
 
 export default function AddCategory() {
   return (
@@ -26,8 +27,11 @@ export default function AddCategory() {
         >
           <MainContainer>
             <h1 className="text-[#00283a] dark:text-white text-lg font-bold">
-              Add Category
+              All Blogs
             </h1>
+            <div className="w-full">
+              <AllPost />
+            </div>
           </MainContainer>
         </motion.div>
       </AnimatePresence>

@@ -11,6 +11,7 @@ export interface UserType {
 export interface PostType {
   title: string;
   content?: string | null;
+  image: string;
   slug: string;
   createdAt: string;
   userId: string;

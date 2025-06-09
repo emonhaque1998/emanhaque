@@ -18,13 +18,14 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  const { title, content, userId, slug, categoryId } = parseResult.data;
+  const { title, content, image, userId, slug, categoryId } = parseResult.data;
 
   try {
     const newPost = await prisma.post.create({
       data: {
         title,
         content,
+        image,
         slug,
         user: {
           connect: { id: userId },
@@ -58,7 +59,7 @@ export async function GET(req: NextRequest) {
         category: true,
       },
     });
-    return NextResponse.json({ allPost, msg: "Post created" }, { status: 200 });
+    return NextResponse.json({ allPost }, { status: 200 });
   } catch (error) {
     console.error("Prisma error:", error);
     return NextResponse.json({ error: "Database error" }, { status: 500 });

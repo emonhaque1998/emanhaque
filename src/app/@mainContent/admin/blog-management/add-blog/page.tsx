@@ -3,7 +3,6 @@ import * as motion from "motion/react-client";
 import { AnimatePresence, usePresenceData, wrap } from "motion/react";
 import MainContainer from "@/components/MainContainer";
 import React, { useEffect, useState } from "react";
-import { currentUser } from "@clerk/nextjs/server";
 import axios from "axios";
 import { useAppSelector, useAppDispatch } from "@/store/hooks";
 import { addPost } from "@/store/postSlice";
@@ -70,6 +69,7 @@ export default function AddBlog() {
     const formData = new FormData(e.currentTarget);
     const data = {
       title: formData.get("title"),
+      image: imageUrl,
       content: DOMPurify.sanitize(editor?.getHTML() ? editor?.getHTML() : ""),
       userId: user?.id,
       slug: slug,
@@ -257,7 +257,6 @@ export default function AddBlog() {
                     endpoint="imageUploader"
                     onClientUploadComplete={(res) => {
                       // Do something with the response
-                      setImageUrl(res[0].ufsUrl);
                       editor
                         ?.chain()
                         .focus()
@@ -275,6 +274,19 @@ export default function AddBlog() {
                 <EditorContent
                   editor={editor}
                   className="border rounded p-2 min-h-[300px]"
+                />
+              </div>
+              <div className="mt-5">
+                <UploadButton
+                  endpoint="imageUploader"
+                  onClientUploadComplete={(res) => {
+                    // Do something with the response
+                    setImageUrl(res[0].ufsUrl);
+                  }}
+                  onUploadError={(error: Error) => {
+                    // Do something with the error.
+                    alert(`ERROR! ${error.message}`);
+                  }}
                 />
               </div>
               <button
