@@ -26,3 +26,19 @@ export interface CategoryType {
   categorySlug: string;
   post: PostType;
 }
+
+export interface PortfolioType {
+  id: string;
+  title: string;
+  slug: string;
+  content: string;
+  image: string;
+  status: string;
+  clientName: string;
+  location: string;
+  userId: string;
+  categoryId: string;
+  category: CategoryType;
+  user: UserType;
+  createdAt: Date;
+}

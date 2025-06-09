@@ -1,11 +1,18 @@
 "use client";
-import Image from "next/image";
-import { useState } from "react";
-import { FaArrowRight } from "react-icons/fa";
+import axios from "axios";
+import PortfolioTitle from "./PortfolioTitle";
+import { useEffect } from "react";
 
 export default function PortfolioComponent() {
   const category = ["All", "Web Development", "Data Science"];
-  const [showPostTitle, setPostTitle] = useState(false);
+
+  useEffect(() => {
+    const getData = async () => {
+      const res = await axios.get("/api/portfolio?take=10");
+    };
+
+    getData();
+  }, []);
   return (
     <>
       <div className="flex flex-row w-full justify-between gap-3 max-md:flex-col max-md:-mt-20">
@@ -25,29 +32,7 @@ export default function PortfolioComponent() {
         </div>
       </div>
       <div className="mt-5 grid grid-cols-2 gap-3 max-md:grid-cols-1">
-        <div
-          className=" relative rounded-lg shadow-lg overflow-hidden"
-          onMouseEnter={() => setPostTitle(true)}
-          onMouseLeave={() => setPostTitle(false)}
-        >
-          <Image
-            src="/assets/images/banner.jpg"
-            alt="Banner.jpg"
-            width={500}
-            height={0}
-            className="w-full rounded"
-          />
-          <div
-            className={`absolute -bottom-16 ${
-              showPostTitle ? "bottom-0" : "-bottom-16"
-            } bg-white rounded-b transition-all dark:bg-[#00283a] w-full items-center flex flex-row justify-between px-5 py-3`}
-          >
-            <h1 className="text-lg font-medium">Website Design</h1>
-            <div className="w-10 h-10 rounded-full bg-[#00283a] dark:bg-white flex flex-row items-center justify-center">
-              <FaArrowRight className="text-white dark:text-[#70ba65]" />
-            </div>
-          </div>
-        </div>
+        <PortfolioTitle />
       </div>
     </>
   );

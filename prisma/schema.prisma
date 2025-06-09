@@ -22,6 +22,7 @@ model User {
   role      String?   @default("user")
   image     String?
   post      Post[]
+  portfolio Portfolio[]
   createdAt DateTime @default(now())
 }
 
@@ -59,5 +60,27 @@ model Category{
   categoryName  String
   categorySlug  String
   post  Post[]
+  portfolio Portfolio[]
   createdAt DateTime @default(now())
+}
+
+enum Status {
+  Pending
+  Complete
+}
+
+model Portfolio{
+  id          String    @id   @default(cuid())
+  title       String
+  slug        String
+  content     String
+  image       String
+  status      Status
+  clientName  String
+  location    String
+  userId      String
+  categoryId  String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  category    Category     @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  createdAt   DateTime @default(now())
 }
