@@ -1,25 +1,14 @@
-"use client";
 import * as motion from "motion/react-client";
 import { AnimatePresence, usePresenceData, wrap } from "motion/react";
 import MainContainer from "@/components/MainContainer";
-import AllPost from "@/components/admin/AllPost";
-import axios from "axios";
-import { addAllPost } from "@/store/postSlice";
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { useEffect } from "react";
+import prisma from "@/lib/prisma";
+import AdminCountDecoration from "@/components/admin/AdminCountDecoration";
 
-export default function AddCategory() {
-  const dispatch = useAppDispatch();
-  const posts = useAppSelector((state) => state.postSlice.data);
-
-  useEffect(() => {
-    const getPost = async () => {
-      const allPost = await axios.get("/api/post?take=10");
-      dispatch(addAllPost(allPost.data.allPost));
-    };
-
-    getPost();
-  }, []);
+export default async function portFolioManagement() {
+  const [postCount, categoryCount] = await Promise.all([
+    prisma.post.count(),
+    prisma.category.count(),
+  ]);
 
   return (
     <>
@@ -37,10 +26,15 @@ export default function AddCategory() {
         >
           <MainContainer>
             <h1 className="text-[#00283a] dark:text-white text-lg font-bold">
-              All Blogs
+              Portfolio Information
             </h1>
-            <div className="w-full">
-              <AllPost posts={posts} />
+
+            <div className="mt-10 flex flex-row justify-between w-full gap-5">
+              <AdminCountDecoration title="Total Portfolio" count={postCount} />
+              <AdminCountDecoration
+                title="Total Category"
+                count={categoryCount}
+              />
             </div>
           </MainContainer>
         </motion.div>

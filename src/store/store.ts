@@ -5,6 +5,7 @@ import bannerReducer from "./bannerSlice";
 import postReducer from "./postSlice";
 import categoryReducer from "./categorySlice";
 import singlePostReducer from "./singlePost";
+import portFolioReducer from "./portfolioSlice";
 
 export const store = configureStore({
   reducer: {
@@ -13,6 +14,7 @@ export const store = configureStore({
     postSlice: postReducer,
     categorySlice: categoryReducer,
     singlePostSlice: singlePostReducer,
+    portfolioSlice: portFolioReducer,
   },
 });
 

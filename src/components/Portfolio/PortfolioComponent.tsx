@@ -2,16 +2,27 @@
 import axios from "axios";
 import PortfolioTitle from "./PortfolioTitle";
 import { useEffect } from "react";
+import { useAppSelector, useAppDispatch } from "@/store/hooks";
+import { addAllCategory } from "@/store/categorySlice";
+import { addAllPortfolio } from "@/store/portfolioSlice";
 
 export default function PortfolioComponent() {
-  const category = ["All", "Web Development", "Data Science"];
+  const categoris = useAppSelector((state) => state.categorySlice.data);
+  const portfolios = useAppSelector((state) => state.portfolioSlice.data);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
-    const getData = async () => {
-      const res = await axios.get("/api/portfolio?take=10");
+    const getPortfolio = async () => {
+      const portfolioRes = await axios.get("/api/portfolio?take=10");
+
+      const categoryRes = await axios.get(
+        "/api/post/category/have-portfolio-category"
+      );
+      dispatch(addAllPortfolio(portfolioRes.data));
+      dispatch(addAllCategory(categoryRes.data));
     };
 
-    getData();
+    getPortfolio();
   }, []);
   return (
     <>
@@ -19,20 +30,21 @@ export default function PortfolioComponent() {
         <div className="bg-[#fcfcfe] rounded-lg shadow-lg dark:bg-[#00283a] py-10 px-10 flex-1 flex-col justify-center flex items-center">
           <div className="w-full">
             <div className="flex flex-row items-center gap-3 justify-start w-full">
-              {category.map((cat, index) => (
-                <button
-                  key={index}
-                  className="bg-[#f4f5f7] text-sm dark:bg-[#02162b] px-5 cursor-pointer py-2 rounded-2xl hover:bg-[#70ba65] dark:hover:bg-[#70ba65] transition-all duration-300 text-[#00283A] dark:text-white font-semibold"
-                >
-                  {cat}
-                </button>
-              ))}
+              {categoris &&
+                categoris.map((category, index) => (
+                  <button
+                    key={index}
+                    className="bg-[#f4f5f7] text-sm dark:bg-[#02162b] px-5 cursor-pointer py-2 rounded-2xl hover:bg-[#70ba65] dark:hover:bg-[#70ba65] transition-all duration-300 text-[#00283A] dark:text-white font-semibold"
+                  >
+                    {category.categoryName}
+                  </button>
+                ))}
             </div>
           </div>
         </div>
       </div>
       <div className="mt-5 grid grid-cols-2 gap-3 max-md:grid-cols-1">
-        <PortfolioTitle />
+        <PortfolioTitle portfolios={portfolios} />
       </div>
     </>
   );

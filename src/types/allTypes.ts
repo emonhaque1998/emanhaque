@@ -24,7 +24,9 @@ export interface CategoryType {
   id: string;
   categoryName: string;
   categorySlug: string;
-  post: PostType;
+  post?: PostType;
+  user?: UserType;
+  portfolio?: PortfolioType;
 }
 
 export interface PortfolioType {

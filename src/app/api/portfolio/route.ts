@@ -21,7 +21,10 @@ export async function POST(req: NextRequest) {
     const newPost = await prisma.portfolio.create({
       data: parseResult.data,
     });
-    return NextResponse.json({ newPost, msg: "Post created" }, { status: 200 });
+    return NextResponse.json(
+      { newPost, msg: "Portfolio created" },
+      { status: 200 }
+    );
   } catch (error) {
     console.error("Prisma error:", error);
     return NextResponse.json({ error: "Database error" }, { status: 500 });
@@ -34,14 +37,14 @@ export async function GET(req: NextRequest) {
   const take = takeParam ? parseInt(takeParam) : 2; // Default to 2 if not provided
 
   try {
-    const allPost = await prisma.portfolio.findMany({
+    const allPortfolio = await prisma.portfolio.findMany({
       take,
       include: {
         user: true,
         category: true,
       },
     });
-    return NextResponse.json(allPost, { status: 200 });
+    return NextResponse.json(allPortfolio, { status: 200 });
   } catch (error) {
     console.error("Prisma error:", error);
     return NextResponse.json({ error: "Database error" }, { status: 500 });

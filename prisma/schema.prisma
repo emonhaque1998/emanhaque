@@ -72,7 +72,7 @@ enum Status {
 model Portfolio{
   id          String    @id   @default(cuid())
   title       String
-  slug        String
+  slug        String    @unique
   content     String
   image       String
   status      Status

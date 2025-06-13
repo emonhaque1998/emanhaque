@@ -3,24 +3,23 @@ import * as motion from "motion/react-client";
 import { AnimatePresence, usePresenceData, wrap } from "motion/react";
 import MainContainer from "@/components/MainContainer";
 import AllPost from "@/components/admin/AllPost";
-import axios from "axios";
-import { addAllPost } from "@/store/postSlice";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { useEffect } from "react";
+import axios from "axios";
+import { addAllPortfolio } from "@/store/portfolioSlice";
 
 export default function AddCategory() {
   const dispatch = useAppDispatch();
-  const posts = useAppSelector((state) => state.postSlice.data);
+  const posts = useAppSelector((state) => state.portfolioSlice.data);
 
   useEffect(() => {
     const getPost = async () => {
-      const allPost = await axios.get("/api/post?take=10");
-      dispatch(addAllPost(allPost.data.allPost));
+      const allPost = await axios.get("/api/portfolio?take=10");
+      dispatch(addAllPortfolio(allPost.data));
     };
 
     getPost();
   }, []);
-
   return (
     <>
       <AnimatePresence mode="wait">

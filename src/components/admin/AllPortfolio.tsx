@@ -1,6 +1,23 @@
+"use client";
+import axios from "axios";
+import { useEffect } from "react";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { addAllPost } from "@/store/postSlice";
 import Image from "next/image";
 
-export default function AllPost({ posts }: { posts?: any[] | null }) {
+export default function AllPortfolio() {
+  const dispatch = useAppDispatch();
+  const posts = useAppSelector((state) => state.postSlice.data);
+
+  useEffect(() => {
+    const getPost = async () => {
+      const allPost = await axios.get("/api/portfolio?take=10");
+      dispatch(addAllPost(allPost.data));
+    };
+
+    getPost();
+  }, []);
+
   return (
     <div className="w-full mt-10">
       <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
