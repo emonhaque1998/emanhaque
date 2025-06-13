@@ -8,7 +8,7 @@ import { FaArrowRight } from "react-icons/fa";
 export default function PortfolioTitle({
   portfolios,
 }: {
-  portfolios?: PortfolioType[] | null;
+  portfolios?: PortfolioType[] | null | undefined;
 }) {
   const [showPostTitle, setPostTitle] = useState(false);
 
@@ -18,7 +18,7 @@ export default function PortfolioTitle({
         portfolios.map((portfolio, index) => (
           <Link
             key={index}
-            href={`portfolio/${portfolio.category.categorySlug}/${portfolio.slug}`}
+            href={`/portfolio/${portfolio.category.categorySlug}/${portfolio.slug}`}
           >
             <div
               className="cursor-pointer relative rounded-lg shadow-lg overflow-hidden"

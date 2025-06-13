@@ -29,6 +29,15 @@ export interface CategoryType {
   portfolio?: PortfolioType;
 }
 
+export interface CategoryTypeAndPortFolio {
+  id: string;
+  categoryName: string;
+  categorySlug: string;
+  post?: PostType;
+  user?: UserType;
+  portfolio?: PortfolioType[];
+}
+
 export interface PortfolioType {
   id: string;
   title: string;

@@ -4,10 +4,12 @@ import { PortfolioType } from "@/types/allTypes";
 
 interface PostState {
   data?: PortfolioType[] | null;
+  singlePortfolio?: PortfolioType | null;
 }
 
 const initialState: PostState = {
-  data: null,
+  data: [],
+  singlePortfolio: null,
 };
 
 export const portfolioSlice = createSlice({
@@ -17,11 +19,15 @@ export const portfolioSlice = createSlice({
     addPortfolio: (state, action: PayloadAction<PortfolioType>) => {
       state.data?.push(action.payload);
     },
+    addSignlePortfolio: (state, action: PayloadAction<PortfolioType>) => {
+      state.singlePortfolio = action.payload;
+    },
     addAllPortfolio: (state, action: PayloadAction<PortfolioType[]>) => {
       state.data = action.payload;
     },
   },
 });
 
-export const { addPortfolio, addAllPortfolio } = portfolioSlice.actions;
+export const { addPortfolio, addAllPortfolio, addSignlePortfolio } =
+  portfolioSlice.actions;
 export default portfolioSlice.reducer;
