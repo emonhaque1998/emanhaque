@@ -53,3 +53,14 @@ export interface PortfolioType {
   user: UserType;
   createdAt: Date;
 }
+
+export interface ContactType {
+  id: string;
+  name: string;
+  email: string;
+  subject: string;
+  message?: string;
+  userId: string;
+  user: UserType;
+  createdAt: Date;
+}

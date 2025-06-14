@@ -23,6 +23,7 @@ model User {
   image     String?
   post      Post[]
   portfolio Portfolio[]
+  contact   Contact[]
   createdAt DateTime @default(now())
 }
 
@@ -82,5 +83,16 @@ model Portfolio{
   categoryId  String
   user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   category    Category     @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  createdAt   DateTime @default(now())
+}
+
+model Contact{
+  id     String    @id   @default(cuid())
+  name   String
+  email   String
+  subject String
+  message String?
+  userId  String?
+  user      User?       @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt   DateTime @default(now())
 }

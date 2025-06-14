@@ -6,7 +6,7 @@ const NavItems = [
   { name: "User Management", path: "/admin/user-management" },
   { name: "Blog Management", path: "/admin/blog-management" },
   { name: "Portfolio Management", path: "/admin/portfolio-management" },
-  { name: "Contact Management", path: "/admin/portfolio-management" },
+  { name: "Contact Management", path: "/admin/contact-management" },
   { name: "Service Management", path: "/admin/service-management" },
   { name: "Price Plans Management", path: "/admin/price-plans-management" },
   { name: "Testimonials Management", path: "/admin/testimonials-management" },

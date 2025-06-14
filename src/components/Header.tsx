@@ -3,7 +3,7 @@ import ModeToggle from "@/components/ModeToggole";
 import * as motion from "motion/react-client";
 import MenuButtonForM from "@/components/MenuBUttonForM";
 import MobileNavMenu from "@/components/MobileNavMenu";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "./Button";
 import { FaArrowDown } from "react-icons/fa";
 import {
@@ -14,12 +14,28 @@ import {
   UserButton,
 } from "@clerk/nextjs";
 import Link from "next/link";
+import { useAppDispatch } from "@/store/hooks";
+import { addUser } from "@/store/userSlice";
+import { useUser } from "@clerk/nextjs";
 
 export default function Header() {
   const [showNavMenu, setNavMenu] = useState(false);
+  const dispatch = useAppDispatch();
+  const { user } = useUser();
   const navChangeHandler = () => {
     setNavMenu(!showNavMenu);
   };
+
+  useEffect(() => {
+    const refreshUser = () => {
+      console.log(user);
+      if (!user) {
+        dispatch(addUser(null));
+      }
+    };
+
+    refreshUser();
+  }, [user]);
 
   return (
     <header className="bg-[#fcfcfe] dark:bg-[#00283a] rounded-xl max-md:rounded-none sticky max-md:relative top-0 z-50">

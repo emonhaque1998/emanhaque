@@ -5,6 +5,7 @@ import bannerReducer from "./bannerSlice";
 import postReducer from "./postSlice";
 import categoryReducer from "./categorySlice";
 import singlePostReducer from "./singlePost";
+import contactReducer from "./contactSlice";
 import portFolioReducer from "./portfolioSlice";
 
 export const store = configureStore({
@@ -15,6 +16,7 @@ export const store = configureStore({
     categorySlice: categoryReducer,
     singlePostSlice: singlePostReducer,
     portfolioSlice: portFolioReducer,
+    constactSlice: contactReducer,
   },
 });
 
