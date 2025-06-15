@@ -17,7 +17,7 @@ export default function MainContent() {
       <MyService />
       <PricePlan />
       <Testimonials />
-      <Publications take={2} />
+      <Publications />
       <HorizontalRowDotted />
       <Footer />
     </>
