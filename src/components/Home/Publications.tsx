@@ -4,26 +4,47 @@ import Image from "next/image";
 import TitleHeader from "../TitleHeader";
 import HorizontalRowDotted from "../HorizontalRowDotted";
 import { useAppSelector, useAppDispatch } from "@/store/hooks";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { addAllPost } from "@/store/postSlice";
 import { format } from "date-fns";
 import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
 
-export default function Publications({ take }: { take: number }) {
+type Meta = {
+  page: number;
+  limit: number;
+  totalPages: number;
+  total: number;
+};
+
+export default function Publications() {
   const allPost = useAppSelector((state) => state.postSlice.data);
-  console.log(allPost);
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const page = parseInt(searchParams.get("page") || "1");
+  const limit = 2;
   const dispatch = useAppDispatch();
 
+  const [meta, setMeta] = useState<Meta | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  const fetchPosts = async () => {
+    // setLoading(true);
+    const res = await axios.get(`/api/post?page=${page}&limit=${limit}`);
+    console.log(res.data.posts);
+    dispatch(addAllPost(res.data.posts));
+    setMeta(res.data.meta);
+    setLoading(false);
+  };
+
   useEffect(() => {
-    const getAllPost = async () => {
-      const res = await axios.get(`/api/post?take=${take}`);
+    fetchPosts();
+  }, [page]);
 
-      dispatch(addAllPost(res.data.allPost));
-    };
-    getAllPost();
-  }, []);
-
+  const goToPage = (p: number) => {
+    router.push(`/blog?page=${p}`);
+  };
   return (
     <>
       <div>
@@ -41,15 +62,15 @@ export default function Publications({ take }: { take: number }) {
                     key={index}
                     className="bg-white dark:bg-[#00283a] pb-5 w-full flex-col items-center gap-4 rounded-lg flex justify-center"
                   >
-                    <div className="flex flex-col gap-5">
-                      <div>
+                    <div className="flex flex-col gap-5 w-full">
+                      <div className="">
                         <Link href={`/blog/${post.slug}`}>
                           <Image
                             src={post.image}
-                            width={500}
+                            width={600}
                             height={0}
                             alt="blog banner"
-                            className="w-full rounded-lg"
+                            className="w-full rounded-lg h-60 object-cover"
                           />
                         </Link>
                       </div>
@@ -76,6 +97,35 @@ export default function Publications({ take }: { take: number }) {
                   </div>
                 );
               })}
+            <div className="mt-6 flex justify-center items-center space-x-2">
+              <button
+                className="px-3 py-1 bg-gray-200 rounded disabled:opacity-50"
+                onClick={() => goToPage(page - 1)}
+                disabled={page === 1}
+              >
+                Prev
+              </button>
+
+              {Array.from({ length: meta?.totalPages || 0 }, (_, i) => (
+                <button
+                  key={i + 1}
+                  className={`px-3 py-1 rounded ${
+                    page === i + 1 ? "bg-blue-500 text-white" : "bg-gray-200"
+                  }`}
+                  onClick={() => goToPage(i + 1)}
+                >
+                  {i + 1}
+                </button>
+              ))}
+
+              <button
+                className="px-3 py-1 bg-gray-200 rounded disabled:opacity-50"
+                onClick={() => goToPage(page + 1)}
+                disabled={page === (meta?.totalPages || 1)}
+              >
+                Next
+              </button>
+            </div>
           </div>
         </div>
       </div>
