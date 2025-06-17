@@ -10,6 +10,8 @@ import { addAllPost } from "@/store/postSlice";
 import { format } from "date-fns";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
+import Footer from "../Footer";
+import Loading from "../Loading";
 
 type Meta = {
   page: number;
@@ -30,9 +32,8 @@ export default function Publications() {
   const [loading, setLoading] = useState(true);
 
   const fetchPosts = async () => {
-    // setLoading(true);
+    setLoading(true);
     const res = await axios.get(`/api/post?page=${page}&limit=${limit}`);
-    console.log(res.data.posts);
     dispatch(addAllPost(res.data.posts));
     setMeta(res.data.meta);
     setLoading(false);
@@ -54,80 +55,93 @@ export default function Publications() {
             titleWidth="w-5/12"
             secNumber={6}
           />
-          <div className="mt-5 grid grid-cols-2 max-md:grid-cols-1 gap-3">
-            {allPost &&
-              allPost.map((post, index) => {
-                return (
-                  <div
-                    key={index}
-                    className="bg-white dark:bg-[#00283a] pb-5 w-full flex-col items-center gap-4 rounded-lg flex justify-center"
-                  >
-                    <div className="flex flex-col gap-5 w-full">
-                      <div className="">
-                        <Link href={`/blog/${post.slug}`}>
-                          <Image
-                            src={post.image}
-                            width={600}
-                            height={0}
-                            alt="blog banner"
-                            className="w-full rounded-lg h-60 object-cover"
-                          />
-                        </Link>
+          <div className="w-full mt-5">
+            {loading ? (
+              <Loading />
+            ) : (
+              <div className="grid grid-cols-2 max-md:grid-cols-1 gap-3">
+                {allPost &&
+                  allPost.map((post, index) => {
+                    return (
+                      <div
+                        key={index}
+                        className="bg-white dark:bg-[#00283a] pb-5 w-full flex-col items-center gap-4 rounded-lg flex justify-center"
+                      >
+                        <div className="flex flex-col gap-5 w-full">
+                          <div className="">
+                            <Link href={`/blog/${post.slug}`}>
+                              <Image
+                                src={post.image}
+                                width={600}
+                                height={0}
+                                alt="blog banner"
+                                className="w-full rounded-lg h-60 object-cover"
+                              />
+                            </Link>
+                          </div>
+                          <div className="px-10">
+                            <div className="flex flex-row gap-2">
+                              <span className="text-gray-500 uppercase">
+                                {post.category.categoryName}
+                              </span>
+                            </div>
+                            <div>
+                              <h1 className="text-xl font-bold">
+                                {post.title}
+                              </h1>
+                            </div>
+                            <HorizontalRowDotted />
+                            <div>
+                              <span className="text-gray-500">
+                                {format(new Date(post.createdAt), "dd-MM-yyyy")}{" "}
+                                <span className="text-red-600 dark:text-[#70ba65]">
+                                  {post.user.name}
+                                </span>
+                              </span>
+                            </div>
+                          </div>
+                        </div>
                       </div>
-                      <div className="px-10">
-                        <div className="flex flex-row gap-2">
-                          <span className="text-gray-500 uppercase">
-                            {post.category.categoryName}
-                          </span>
-                        </div>
-                        <div>
-                          <h1 className="text-xl font-bold">{post.title}</h1>
-                        </div>
-                        <HorizontalRowDotted />
-                        <div>
-                          <span className="text-gray-500">
-                            {format(new Date(post.createdAt), "dd-MM-yyyy")}{" "}
-                            <span className="text-red-600 dark:text-[#70ba65]">
-                              {post.user.name}
-                            </span>
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
-            <div className="mt-6 flex justify-center items-center space-x-2">
-              <button
-                className="px-3 py-1 bg-gray-200 rounded disabled:opacity-50"
-                onClick={() => goToPage(page - 1)}
-                disabled={page === 1}
-              >
-                Prev
-              </button>
+                    );
+                  })}
+              </div>
+            )}
+          </div>
 
-              {Array.from({ length: meta?.totalPages || 0 }, (_, i) => (
-                <button
-                  key={i + 1}
-                  className={`px-3 py-1 rounded ${
-                    page === i + 1 ? "bg-blue-500 text-white" : "bg-gray-200"
-                  }`}
-                  onClick={() => goToPage(i + 1)}
-                >
-                  {i + 1}
-                </button>
-              ))}
+          <div className="mt-6 flex justify-center items-center space-x-2">
+            <button
+              className="px-3 py-1 bg-[#70ba65] dark:bg-black/50 rounded disabled:opacity-50"
+              onClick={() => goToPage(page - 1)}
+              disabled={page === 1}
+            >
+              Prev
+            </button>
 
+            {Array.from({ length: meta?.totalPages || 0 }, (_, i) => (
               <button
-                className="px-3 py-1 bg-gray-200 rounded disabled:opacity-50"
-                onClick={() => goToPage(page + 1)}
-                disabled={page === (meta?.totalPages || 1)}
+                key={i + 1}
+                className={`px-3 py-1 rounded ${
+                  page === i + 1
+                    ? "bg-[#70ba65] dark:bg-black/50 text-white"
+                    : "bg-gray-200/30"
+                }`}
+                onClick={() => goToPage(i + 1)}
               >
-                Next
+                {i + 1}
               </button>
-            </div>
+            ))}
+
+            <button
+              className="px-3 py-1 bg-[#70ba65] dark:bg-black/50 rounded disabled:opacity-50"
+              onClick={() => goToPage(page + 1)}
+              disabled={page === (meta?.totalPages || 1)}
+            >
+              Next
+            </button>
           </div>
         </div>
+        <HorizontalRowDotted />
+        <Footer />
       </div>
     </>
   );

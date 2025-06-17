@@ -27,6 +27,7 @@ export interface CategoryType {
   post?: PostType;
   user?: UserType;
   portfolio?: PortfolioType;
+  service?: ServiceType;
 }
 
 export interface CategoryTypeAndPortFolio {
@@ -62,5 +63,15 @@ export interface ContactType {
   message?: string;
   userId: string;
   user: UserType;
+  createdAt: Date;
+}
+
+export interface ServiceType {
+  id: string;
+  image: string;
+  serviceName: string;
+  slug: string;
+  shortDescription: string;
+  category?: CategoryType;
   createdAt: Date;
 }
