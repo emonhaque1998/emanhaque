@@ -14,7 +14,6 @@ const navItems = [
 
 export default function MobileNavMenu({ show }: { show: boolean }) {
   const pathName = usePathname();
-  console.log(pathName);
 
   return (
     <div className="max-md:w-full">
