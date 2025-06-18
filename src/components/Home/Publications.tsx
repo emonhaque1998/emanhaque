@@ -31,7 +31,7 @@ export default function Publications() {
   const [meta, setMeta] = useState<Meta | null>(null);
   const [loading, setLoading] = useState(true);
 
-  const fetchPosts = async () => {
+  const fetchPosts = async (pageNumber: number) => {
     setLoading(true);
     const res = await axios.get(`/api/post?page=${page}&limit=${limit}`);
     dispatch(addAllPost(res.data.posts));
@@ -40,11 +40,12 @@ export default function Publications() {
   };
 
   useEffect(() => {
-    fetchPosts();
-  }, [page, limit]);
+    const pageNumber = parseInt(searchParams.get("page") || "1");
+    fetchPosts(pageNumber);
+  }, [searchParams]);
 
   const goToPage = (p: number) => {
-    router.push(`/blog?page=${p}`);
+    router.push(`blog?page=${p}`);
   };
   return (
     <>
@@ -109,14 +110,13 @@ export default function Publications() {
           </div>
 
           <div className="mt-6 flex justify-center items-center space-x-2">
-            {page != 1 && (
-              <Link
-                href={`/blog?page=${page - 1}`}
-                className="px-3 py-1 bg-[#70ba65] dark:bg-black/50 rounded disabled:opacity-50"
-              >
-                Prev
-              </Link>
-            )}
+            <button
+              className="px-3 py-1 bg-[#70ba65] dark:bg-black/50 rounded disabled:opacity-50"
+              onClick={() => goToPage(page - 1)}
+              disabled={page === 1}
+            >
+              Prev
+            </button>
 
             {Array.from({ length: meta?.totalPages || 0 }, (_, i) => (
               <button
@@ -132,14 +132,13 @@ export default function Publications() {
               </button>
             ))}
 
-            {page != (meta?.totalPages || 1) && (
-              <Link
-                href={`/blog?page=${page + 1}`}
-                className="px-3 py-1 bg-[#70ba65] dark:bg-black/50 rounded disabled:opacity-50"
-              >
-                Next
-              </Link>
-            )}
+            <button
+              className="px-3 py-1 bg-[#70ba65] dark:bg-black/50 rounded disabled:opacity-50"
+              onClick={() => goToPage(page + 1)}
+              disabled={page === (meta?.totalPages || 1)}
+            >
+              Next
+            </button>
           </div>
         </div>
         <HorizontalRowDotted />

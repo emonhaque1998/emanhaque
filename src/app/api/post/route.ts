@@ -66,15 +66,23 @@ export async function GET(req: NextRequest) {
       prisma.post.count(),
     ]);
 
-    return NextResponse.json({
-      posts: posts,
-      meta: {
-        total,
-        page,
-        limit,
-        totalPages: Math.ceil(total / limit),
+    return NextResponse.json(
+      {
+        posts: posts,
+        meta: {
+          total,
+          page,
+          limit,
+          totalPages: Math.ceil(total / limit),
+        },
       },
-    });
+      {
+        status: 200,
+        headers: {
+          "Cache-Control": "no-store",
+        },
+      }
+    );
   } catch (error) {
     console.error(error);
     return NextResponse.json(
