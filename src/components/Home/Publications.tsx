@@ -9,7 +9,6 @@ import axios from "axios";
 import { addAllPost } from "@/store/postSlice";
 import { format } from "date-fns";
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
 import Footer from "../Footer";
 import Loading from "../Loading";
 
@@ -22,29 +21,21 @@ type Meta = {
 
 export default function Publications() {
   const allPost = useAppSelector((state) => state.postSlice.data);
-  const searchParams = useSearchParams();
-  const router = useRouter();
-  const page = parseInt(searchParams.get("page") || "1");
   const limit = 2;
   const dispatch = useAppDispatch();
-
+  const [page, setPage] = useState(1);
   const [meta, setMeta] = useState<Meta | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     setLoading(true);
-    const pageNumber = parseInt(searchParams.get("page") || "1");
-    axios.get(`/api/post?page=${pageNumber}&limit=${limit}`).then((res) => {
+    axios.get(`/api/post?page=${page}&limit=${limit}`).then((res) => {
       dispatch(addAllPost(res.data.posts));
       setMeta(res.data.meta);
       setLoading(false);
     });
-  }, [searchParams]);
+  }, [page]);
 
-  const goToPage = (p: number) => {
-    console.log(p);
-    router.push(`blog?page=${p}`);
-  };
   return (
     <>
       <div>
@@ -110,7 +101,7 @@ export default function Publications() {
           <div className="mt-6 flex justify-center items-center space-x-2">
             <button
               className="px-3 py-1 bg-[#70ba65] dark:bg-black/50 rounded disabled:opacity-50"
-              onClick={() => goToPage(page - 1)}
+              onClick={() => setPage(page - 1)}
               disabled={page === 1}
             >
               Prev
@@ -124,7 +115,7 @@ export default function Publications() {
                     ? "bg-[#70ba65] dark:bg-black/50 text-white"
                     : "bg-gray-200/30"
                 }`}
-                onClick={() => goToPage(i + 1)}
+                onClick={() => setPage(i + 1)}
               >
                 {i + 1}
               </button>
@@ -132,7 +123,7 @@ export default function Publications() {
 
             <button
               className="px-3 py-1 bg-[#70ba65] dark:bg-black/50 rounded disabled:opacity-50"
-              onClick={() => goToPage(page + 1)}
+              onClick={() => setPage(page + 1)}
               disabled={page === (meta?.totalPages || 1)}
             >
               Next
