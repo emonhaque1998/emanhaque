@@ -44,7 +44,7 @@ export default function Publications() {
   }, [page, limit]);
 
   const goToPage = (p: number) => {
-    router.push(`blog?page=${p}`);
+    router.push(`/blog?page=${p}`);
   };
   return (
     <>
@@ -109,13 +109,14 @@ export default function Publications() {
           </div>
 
           <div className="mt-6 flex justify-center items-center space-x-2">
-            <button
-              className="px-3 py-1 bg-[#70ba65] dark:bg-black/50 rounded disabled:opacity-50"
-              onClick={() => goToPage(page - 1)}
-              disabled={page === 1}
-            >
-              Prev
-            </button>
+            {page != 1 && (
+              <Link
+                href={`/blog?page=${page - 1}`}
+                className="px-3 py-1 bg-[#70ba65] dark:bg-black/50 rounded disabled:opacity-50"
+              >
+                Prev
+              </Link>
+            )}
 
             {Array.from({ length: meta?.totalPages || 0 }, (_, i) => (
               <button
@@ -131,13 +132,14 @@ export default function Publications() {
               </button>
             ))}
 
-            <button
-              className="px-3 py-1 bg-[#70ba65] dark:bg-black/50 rounded disabled:opacity-50"
-              onClick={() => goToPage(page + 1)}
-              disabled={page === (meta?.totalPages || 1)}
-            >
-              Next
-            </button>
+            {page != (meta?.totalPages || 1) && (
+              <Link
+                href={`/blog?page=${page + 1}`}
+                className="px-3 py-1 bg-[#70ba65] dark:bg-black/50 rounded disabled:opacity-50"
+              >
+                Next
+              </Link>
+            )}
           </div>
         </div>
         <HorizontalRowDotted />
