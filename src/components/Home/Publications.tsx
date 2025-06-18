@@ -31,15 +31,15 @@ export default function Publications() {
   const [meta, setMeta] = useState<Meta | null>(null);
   const [loading, setLoading] = useState(true);
 
-  const fetchPosts = async () => {
-    setLoading(true);
-    const res = await axios.get(`/api/post?page=${page}&limit=${limit}`);
-    dispatch(addAllPost(res.data.posts));
-    setMeta(res.data.meta);
-    setLoading(false);
-  };
-
   useEffect(() => {
+    const fetchPosts = async () => {
+      setLoading(true);
+      const res = await axios.get(`/api/post?page=${page}&limit=${limit}`);
+      dispatch(addAllPost(res.data.posts));
+      setMeta(res.data.meta);
+      setLoading(false);
+    };
+
     fetchPosts();
   }, [page]);
 
