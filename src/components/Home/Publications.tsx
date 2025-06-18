@@ -31,20 +31,18 @@ export default function Publications() {
   const [meta, setMeta] = useState<Meta | null>(null);
   const [loading, setLoading] = useState(true);
 
-  const fetchPosts = async (pageNumber: number) => {
-    setLoading(true);
-    const res = await axios.get(`/api/post?page=${page}&limit=${limit}`);
-    dispatch(addAllPost(res.data.posts));
-    setMeta(res.data.meta);
-    setLoading(false);
-  };
-
   useEffect(() => {
+    setLoading(true);
     const pageNumber = parseInt(searchParams.get("page") || "1");
-    fetchPosts(pageNumber);
+    axios.get(`/api/post?page=${pageNumber}&limit=${limit}`).then((res) => {
+      dispatch(addAllPost(res.data.posts));
+      setMeta(res.data.meta);
+      setLoading(false);
+    });
   }, [searchParams]);
 
   const goToPage = (p: number) => {
+    console.log(p);
     router.push(`blog?page=${p}`);
   };
   return (
