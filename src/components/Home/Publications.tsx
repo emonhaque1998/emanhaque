@@ -44,7 +44,7 @@ export default function Publications() {
   }, [page]);
 
   const goToPage = (p: number) => {
-    router.push(`/blog?page=${p}`);
+    router.push(`blog?page=${p}`);
   };
   return (
     <>
