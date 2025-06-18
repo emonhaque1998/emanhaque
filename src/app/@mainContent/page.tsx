@@ -2,12 +2,11 @@ import Footer from "@/components/Footer";
 import MyService from "@/components/Home/MyService";
 import MyStory from "@/components/Home/MyStory";
 import PricePlan from "@/components/Home/PricePlan";
-import Publications from "@/components/Home/Publications";
 import SkillOverview from "@/components/Home/SkillOverview";
 import Testimonials from "@/components/Home/Testimonials";
 import VideoResume from "@/components/Home/VideoResume";
 import HorizontalRowDotted from "@/components/HorizontalRowDotted";
-import Loading from "@/app/loading";
+import PublicationsLimited from "@/components/Home/PublicationsLimited";
 
 export default function MainContent() {
   return (
@@ -18,7 +17,7 @@ export default function MainContent() {
       <MyService />
       <PricePlan />
       <Testimonials />
-      <Publications />
+      <PublicationsLimited />
       <HorizontalRowDotted />
       <Footer />
     </>
