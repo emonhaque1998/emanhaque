@@ -6,10 +6,15 @@ import React, { ChangeEvent, useEffect, useState } from "react";
 import axios from "axios";
 import { useAppSelector, useAppDispatch } from "@/store/hooks";
 import { addPost } from "@/store/postSlice";
-import { addAllCategory } from "@/store/categorySlice";
+import {
+  addAllCategory,
+  addCategory,
+  addSingleCategory,
+} from "@/store/categorySlice";
 import toast from "react-hot-toast";
 import { UploadButton } from "@/utils/uploadthing";
 import DOMPurify from "dompurify";
+import { addService } from "@/store/serviceSlice";
 
 export default function AddBlog() {
   const [showLoading, setLoading] = useState(false);
@@ -19,17 +24,10 @@ export default function AddBlog() {
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.userSlice.user);
   const categories = useAppSelector((state) => state.categorySlice.data);
-
-  const titleToSlug = (post: string) => {
-    const postSlug = post
-      .toLowerCase()
-      .trim()
-      .replace(/[^\w\s-]/g, "") // Remove non-word characters
-      .replace(/\s+/g, "-") // Replace spaces with hyphens
-      .replace(/--+/g, "-"); // Replace multiple hyphens with a single one
-
-    setSlug(postSlug);
-  };
+  const singleCategory = useAppSelector(
+    (state) => state.categorySlice.singleCategory
+  );
+  const [categoryId, setCategoryId] = useState("");
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -37,23 +35,25 @@ export default function AddBlog() {
 
     const formData = new FormData(e.currentTarget);
     const data = {
-      title: formData.get("title"),
       image: imageUrl,
-      userId: user?.id,
-      slug: slug,
+      shortDescription: formData.get("shortDescription"),
       categoryId: formData.get("categoryId"),
     };
 
-    const res = await axios.post("/api/post", data);
-
-    if (res.status === 200) {
-      dispatch(addPost(res.data));
-      toast.success(res.data.msg);
-      setLoading(false);
-    } else {
-      toast.error(res.data.error || "Something went wrong");
-      setLoading(false);
-    }
+    const res = await axios
+      .post("/api/service", data)
+      .then((res) => {
+        if (res.status === 200) {
+          dispatch(addService(res.data));
+          toast.success(res.data.msg);
+          setLoading(false);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.error(error.response.data.error);
+        setLoading(false);
+      });
   };
 
   useEffect(() => {
@@ -64,6 +64,12 @@ export default function AddBlog() {
 
     getCategories();
   }, []);
+
+  useEffect(() => {
+    axios.get(`/api/post/category/${categoryId}`).then((res) => {
+      dispatch(addSingleCategory(res.data));
+    });
+  }, [categoryId]);
 
   return (
     <>
@@ -95,8 +101,8 @@ export default function AddBlog() {
                   <select
                     id="categoryId"
                     name="categoryId"
-                    onChange={(e: ChangeEvent) => {
-                      console.log(e);
+                    onChange={(e: any) => {
+                      setCategoryId(e.target.value);
                     }}
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   >
@@ -125,31 +131,24 @@ export default function AddBlog() {
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="Place your Slug here"
                     required
-                    value={slug}
+                    value={singleCategory?.categorySlug}
                   />
                 </div>
               </div>
               <div className="mb-5">
                 <label
-                  htmlFor="categoryId"
+                  htmlFor="shortDescription"
                   className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                 >
-                  Select an category
+                  Sort Description
                 </label>
-                <select
-                  id="categoryId"
-                  name="categoryId"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                >
-                  {categories &&
-                    categories.map((category, index) => {
-                      return (
-                        <option key={index} value={category.id}>
-                          {category.categoryName}
-                        </option>
-                      );
-                    })}
-                </select>
+                <textarea
+                  id="shortDescription"
+                  name="shortDescription"
+                  rows={4}
+                  className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  placeholder="Write your thoughts here..."
+                ></textarea>
               </div>
 
               <div className="mt-5">

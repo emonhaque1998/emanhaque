@@ -101,8 +101,6 @@ model Contact{
 model Service{
   id String @id @default(cuid())
   image String
-  serviceName String
-  slug    String
   shortDescription  String
   categoryId String?  @unique
   category   Category? @relation(fields: [categoryId], references: [id])

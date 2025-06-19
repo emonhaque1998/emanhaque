@@ -69,8 +69,6 @@ export interface ContactType {
 export interface ServiceType {
   id: string;
   image: string;
-  serviceName: string;
-  slug: string;
   shortDescription: string;
   category?: CategoryType;
   createdAt: Date;
