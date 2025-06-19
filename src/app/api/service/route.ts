@@ -43,3 +43,19 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Database Error" }, { status: 500 });
   }
 }
+
+export async function GET() {
+  try {
+    const services = await prisma.service.findMany({
+      include: {
+        category: true,
+      },
+    });
+    return NextResponse.json(services, { status: 200 });
+  } catch (error) {
+    return NextResponse.json(
+      { error: "Failed to fetch services" },
+      { status: 500 }
+    );
+  }
+}
