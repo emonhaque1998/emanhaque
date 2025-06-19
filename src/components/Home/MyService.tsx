@@ -13,7 +13,9 @@ export default function MyService() {
 
   useEffect(() => {
     axios.get("/api/service").then((res) => {
-      dispatch(addAllService(res.data));
+      if (res.status === 200) {
+        dispatch(addAllService(res.data));
+      }
     });
   }, []);
   return (
