@@ -28,7 +28,7 @@ export default function MyService() {
         />
         <div className="mt-5 grid-cols-2 max-md:grid-cols-1 grid gap-3">
           {services?.map((item, index) => (
-            <div className="dark:bg-[#00283a] bg-white flex-1 px-10 py-10 rounded-lg flex flex-col gap-3">
+            <div key={index} className="dark:bg-[#00283a] bg-white flex-1 px-10 py-10 rounded-lg flex flex-col gap-3">
               <GiWorld className="text-5xl" />
               <h2 className="text-xl font-bold">
                 {item.category?.categoryName}
