@@ -1,5 +1,5 @@
 "use client";
-import * as motion from "motion/react-client";
+import { motion } from "motion/react";
 import { AnimatePresence, usePresenceData, wrap } from "motion/react";
 import MainContainer from "@/components/MainContainer";
 import React, { useEffect, useState } from "react";
@@ -49,6 +49,7 @@ export default function AddBlog() {
       Paragraph,
     ],
     content: "",
+    immediatelyRender: false
   });
 
   const titleToSlug = (post: string) => {

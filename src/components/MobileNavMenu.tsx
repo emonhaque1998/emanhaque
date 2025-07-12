@@ -1,5 +1,5 @@
 "use client";
-import * as motion from "motion/react-client";
+import { motion } from "motion/react";
 import { AnimatePresence, usePresenceData, wrap } from "motion/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";

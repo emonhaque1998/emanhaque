@@ -1,5 +1,5 @@
 "use client";
-import * as motion from "motion/react-client";
+import { motion } from "motion/react";
 import { AnimatePresence, usePresenceData, wrap } from "motion/react";
 import MainContainer from "@/components/MainContainer";
 import React, { ChangeEvent, useEffect, useState } from "react";

@@ -5,7 +5,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { addBanner } from "@/store/bannerSlice";
-import * as motion from "motion/react-client";
+import { motion } from "motion/react";
 import { AnimatePresence, usePresenceData, wrap } from "motion/react";
 import { useState } from "react";
 

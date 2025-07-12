@@ -1,8 +1,7 @@
 "use client";
-import * as motion from "motion/react-client";
+import { motion } from "motion/react";
 import { AnimatePresence, usePresenceData, wrap } from "motion/react";
 import MainContainer from "@/components/MainContainer";
-import AllPost from "@/components/admin/AllPost";
 import axios from "axios";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { useEffect } from "react";

@@ -1,7 +1,6 @@
-"use client";
 import { IoMenu } from "react-icons/io5";
 import { IoMdClose } from "react-icons/io";
-import * as motion from "motion/react-client";
+import { motion } from "motion/react";
 import { AnimatePresence, usePresenceData, wrap } from "motion/react";
 
 export default function MenuButtonForM({

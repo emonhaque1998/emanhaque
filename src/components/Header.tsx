@@ -1,11 +1,8 @@
 "use client";
 import ModeToggle from "@/components/ModeToggole";
-import * as motion from "motion/react-client";
 import MenuButtonForM from "@/components/MenuBUttonForM";
 import MobileNavMenu from "@/components/MobileNavMenu";
 import { useEffect, useState } from "react";
-import Button from "./Button";
-import { FaArrowDown } from "react-icons/fa";
 import {
   SignInButton,
   SignUpButton,
