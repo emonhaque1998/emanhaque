@@ -49,6 +49,7 @@ export default function AddBlog() {
       Paragraph,
     ],
     content: "",
+    immediatelyRender: false
   });
 
   const titleToSlug = (post: string) => {
