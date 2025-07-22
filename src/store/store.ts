@@ -8,6 +8,7 @@ import singlePostReducer from "./singlePost";
 import contactReducer from "./contactSlice";
 import serviceReducer from "./serviceSlice";
 import portFolioReducer from "./portfolioSlice";
+import loadingReducer from "./loadingSlice";
 
 export const store = configureStore({
   reducer: {
@@ -19,6 +20,7 @@ export const store = configureStore({
     portfolioSlice: portFolioReducer,
     constactSlice: contactReducer,
     serviceSlice: serviceReducer,
+    loadingSlice: loadingReducer,
   },
 });
 
