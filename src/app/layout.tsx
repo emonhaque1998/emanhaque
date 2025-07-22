@@ -10,6 +10,7 @@ import { Toaster } from "react-hot-toast";
 import { ReduxProvider } from "@/components/ReduxProvider";
 import { Suspense } from "react";
 import Loading from "./loading";
+import TawkToWidget from "@/utils/TawkToWidget";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -87,6 +88,7 @@ export default async function RootLayout({
                 </div>
                 <Toaster />
               </div>
+              <TawkToWidget />
             </ReduxProvider>
           </ThemeProvider>
         </body>
