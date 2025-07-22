@@ -6,7 +6,6 @@ import { useEffect, useState } from "react";
 import { FaPlay } from "react-icons/fa";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { addBanner } from "@/store/bannerSlice";
-import Loading from "@/app/loading";
 
 export default function Banner() {
   const dispatch = useAppDispatch();
