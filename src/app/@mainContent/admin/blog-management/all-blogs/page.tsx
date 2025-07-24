@@ -6,21 +6,36 @@ import AllPost from "@/components/admin/AllPost";
 import axios from "axios";
 import { addAllPost } from "@/store/postSlice";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+
+type Meta = {
+  page: number;
+  limit: number;
+  totalPages: number;
+  total: number;
+};
 
 export default function AddCategory() {
   const dispatch = useAppDispatch();
   const posts = useAppSelector((state) => state.postSlice.data);
+  const limit = 2;
+  const [page, setPage] = useState(1);
+  const [meta, setMeta] = useState<Meta | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  const setPagehandler = (page: number) => {
+    setPage(page);
+  };
+
+  console.log(page);
 
   useEffect(() => {
-    const getPost = async () => {
-      const allPost = await axios.get("/api/post?take=10");
-      dispatch(addAllPost(allPost.data.allPost));
-    };
-
-    getPost();
-  }, []);
-
+    axios.get(`/api/post?page=${page}&limit=${limit}`).then((res) => {
+      dispatch(addAllPost(res.data.posts));
+      setMeta(res.data.meta);
+      setLoading(false);
+    });
+  }, [page]);
   return (
     <>
       <AnimatePresence mode="wait">
@@ -40,7 +55,12 @@ export default function AddCategory() {
               All Blogs
             </h1>
             <div className="w-full">
-              <AllPost posts={posts} />
+              <AllPost
+                posts={posts}
+                page={page}
+                meta={meta}
+                setPage={setPagehandler}
+              />
             </div>
           </MainContainer>
         </motion.div>
