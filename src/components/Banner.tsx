@@ -27,7 +27,7 @@ export default function Banner() {
   return (
     <div className="px-10 max-md:px-0 w-full absolute max-md:static top-20">
       <div
-        className={`relative h-screen bg-no-repeat z-10 bg-cover `}
+        className={`relative h-screen bg-no-repeat z-10 bg-cover max-md:h-96 `}
         style={{
           backgroundImage: `url(${
             banner?.image ||

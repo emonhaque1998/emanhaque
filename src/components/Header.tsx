@@ -39,9 +39,17 @@ export default function Header() {
     <header className="bg-[#fcfcfe] dark:bg-[#00283a] rounded-xl max-md:rounded-none sticky max-md:relative top-0 z-50">
       <div className="py-6 max-md:py-8 px-20 max-md:px-5">
         <div className="flex flex-row justify-between items-center">
-          <div className="logo flex flex-col justify-center items-center">
+          <div className="logo flex flex-col justify-center items-center dark:hidden">
             <Image
               src="/assets/images/logo.png"
+              height={60}
+              width={100}
+              alt="Logo"
+            />
+          </div>
+          <div className="logo flex-col justify-center items-center hidden dark:flex">
+            <Image
+              src="/assets/images/logoWhite.png"
               height={60}
               width={100}
               alt="Logo"
