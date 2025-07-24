@@ -14,6 +14,7 @@ import Link from "next/link";
 import { useAppDispatch } from "@/store/hooks";
 import { addUser } from "@/store/userSlice";
 import { useUser } from "@clerk/nextjs";
+import Image from "next/image";
 
 export default function Header() {
   const [showNavMenu, setNavMenu] = useState(false);
@@ -38,8 +39,13 @@ export default function Header() {
     <header className="bg-[#fcfcfe] dark:bg-[#00283a] rounded-xl max-md:rounded-none sticky max-md:relative top-0 z-50">
       <div className="py-6 max-md:py-8 px-20 max-md:px-5">
         <div className="flex flex-row justify-between items-center">
-          <div className="logo">
-            <h1 className="text-black dark:text-white">Eman Haque</h1>
+          <div className="logo flex flex-col justify-center items-center">
+            <Image
+              src="/assets/images/logo.png"
+              height={60}
+              width={100}
+              alt="Logo"
+            />
           </div>
           <div className="flex flex-row items-center gap-10 max-md:gap-5">
             <MobileNavMenu show={showNavMenu} />
