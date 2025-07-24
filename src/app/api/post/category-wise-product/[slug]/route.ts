@@ -5,20 +5,20 @@ import { auth } from "@clerk/nextjs/server";
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: Promise<{ catSlug: string }> }
+  { params }: { params: Promise<{ slug: string }> }
 ) {
   const { searchParams } = new URL(req.url);
   const page = parseInt(searchParams.get("page") || "1", 10);
   const limit = parseInt(searchParams.get("limit") || "10", 10);
   const skip = (page - 1) * limit;
-  const slug = (await params).catSlug;
+  const slug = (await params).slug;
 
   try {
     const [category, total] = await Promise.all([
       prisma.category.findFirst({
         where: { categorySlug: slug },
         include: {
-          portfolio: {
+          post: {
             take: limit,
             skip: skip,
             include: {
@@ -28,7 +28,7 @@ export async function GET(
           },
         },
       }),
-      prisma.portfolio.count({
+      prisma.post.count({
         where: {
           category: {
             categorySlug: slug,
@@ -39,7 +39,7 @@ export async function GET(
 
     return NextResponse.json(
       {
-        category: category,
+        posts: category?.post,
         meta: {
           total,
           page,

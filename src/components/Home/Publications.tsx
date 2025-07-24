@@ -30,12 +30,14 @@ export default function Publications({
   const [page, setPage] = useState(1);
   const [meta, setMeta] = useState<Meta | null>(null);
   const [loading, setLoading] = useState(true);
-  const url = `/category-wise-product/${categorySlug}`;
+
   useEffect(() => {
     setLoading(true);
+    const url = `/category-wise-product/${categorySlug}`;
     axios
       .get(`/api/post${categorySlug ? url : ""}?page=${page}&limit=${limit}`)
       .then((res) => {
+        console.log(res.data);
         dispatch(addAllPost(res.data.posts));
         setMeta(res.data.meta);
         setLoading(false);
