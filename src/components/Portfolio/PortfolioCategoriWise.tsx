@@ -49,7 +49,9 @@ export default function PortfolioCategoriWise({
     <>
       <div className="w-full">
         <MainContainer>
-          <h1 className="text-center">{category?.categoryName}</h1>
+          <h1 className="text-center w-full">
+            Category: {category?.categoryName}
+          </h1>
         </MainContainer>
       </div>
 
@@ -78,7 +80,7 @@ export default function PortfolioCategoriWise({
                   } bg-white cursor-pointer rounded-b transition-all dark:bg-[#00283a] w-full items-center flex flex-row justify-between px-5 py-3`}
                 >
                   <h1 className="text-lg font-medium">{portfolio.title}</h1>
-                  <div className="w-10 h-10 rounded-full bg-[#00283a] dark:bg-white flex flex-row items-center justify-center">
+                  <div className="w-10 h-10 rounded-full bg-red-500 dark:bg-white flex flex-row items-center justify-center">
                     <FaArrowRight className="text-white dark:text-[#70ba65]" />
                   </div>
                 </div>

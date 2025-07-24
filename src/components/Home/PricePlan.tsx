@@ -25,7 +25,10 @@ export default function PricePlan() {
               <li className="text-gray-500">Amet lorem.</li>
               <li className="text-gray-500">Dolor ipsum</li>
             </ul>
-            <Button text="Order Now" classProperty="mt-5 w-2/3">
+            <Button
+              text="Order Now"
+              classProperty="mt-5 w-2/3 bg-red-500 text-white"
+            >
               <IoIosArrowForward />
             </Button>
           </div>
@@ -42,7 +45,10 @@ export default function PricePlan() {
               <li className="text-gray-500">Amet lorem.</li>
               <li className="text-gray-500">Dolor ipsum</li>
             </ul>
-            <Button text="Order Now" classProperty="mt-5 w-2/3">
+            <Button
+              text="Order Now"
+              classProperty="mt-5 w-2/3 bg-red-500 text-white"
+            >
               <IoIosArrowForward />
             </Button>
           </div>

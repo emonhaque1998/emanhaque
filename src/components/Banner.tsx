@@ -48,7 +48,7 @@ export default function Banner() {
               <Button
                 text="Video Resume"
                 outLine={true}
-                classProperty="border-2 w-1/2 max-md:w-2/3"
+                classProperty="border-2 w-1/2 max-md:w-2/3 text-white"
               >
                 <FaPlay />
               </Button>
