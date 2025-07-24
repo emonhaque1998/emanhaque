@@ -7,6 +7,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { FaArrowRight } from "react-icons/fa";
+import MainContainer from "../MainContainer";
+import { addSingleCategory } from "@/store/categorySlice";
 
 type Meta = {
   page: number;
@@ -15,9 +17,16 @@ type Meta = {
   total: number;
 };
 
-export default function PortfolioTitle() {
+export default function PortfolioCategoriWise({
+  catSlug,
+}: {
+  catSlug: string;
+}) {
   const [showPostTitle, setPostTitle] = useState(false);
   const portfolios = useAppSelector((state) => state.portfolioSlice.data);
+  const category = useAppSelector(
+    (state) => state.categorySlice.singleCategory
+  );
   const limit = 2;
   const dispatch = useAppDispatch();
   const [page, setPage] = useState(1);
@@ -26,15 +35,24 @@ export default function PortfolioTitle() {
 
   useEffect(() => {
     setLoading(true);
-    axios.get(`/api/portfolio?page=${page}&limit=${limit}`).then((res) => {
-      console.log(res.data);
-      dispatch(addAllPortfolio(res.data.portfolio));
-      setMeta(res.data.meta);
-      setLoading(false);
-    });
+    axios
+      .get(`/api/portfolio/${catSlug}?page=${page}&limit=${limit}`)
+      .then((res) => {
+        console.log(res.data);
+        dispatch(addAllPortfolio(res.data.category.portfolio));
+        dispatch(addSingleCategory(res.data.category));
+        setMeta(res.data.meta);
+        setLoading(false);
+      });
   }, [page]);
   return (
     <>
+      <div className="w-full">
+        <MainContainer>
+          <h1 className="text-center">{category?.categoryName}</h1>
+        </MainContainer>
+      </div>
+
       <div className="mt-5 grid grid-cols-2 gap-3 max-md:grid-cols-1">
         {portfolios &&
           portfolios.map((portfolio, index) => (

@@ -50,9 +50,7 @@ export default function PortfolioComponent() {
           )}
         </div>
       </div>
-      <div className="mt-5 grid grid-cols-2 gap-3 max-md:grid-cols-1">
-        {loading ? <Loading /> : <PortfolioTitle />}
-      </div>
+      {loading ? <Loading /> : <PortfolioTitle />}
     </>
   );
 }
