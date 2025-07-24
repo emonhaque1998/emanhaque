@@ -16,13 +16,13 @@ import BossLoading from "@/components/BossLoading";
 export default function SinglePost({
   params,
 }: {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ slug: string; catSlug: string }>;
 }) {
   const post = useAppSelector((state) => state.singlePostSlice.data);
   const dispatch = useAppDispatch();
   const [loading, setLoading] = useState(true);
 
-  const { slug } = use(params);
+  const { slug, catSlug } = use(params);
 
   useEffect(() => {
     const post = async () => {

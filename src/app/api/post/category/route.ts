@@ -43,7 +43,11 @@ export async function GET(req: NextRequest) {
 
   if (!takeParam) {
     try {
-      const allCategory = await prisma.category.findMany();
+      const allCategory = await prisma.category.findMany({
+        include: {
+          post: true,
+        },
+      });
       return NextResponse.json({ allCategory }, { status: 200 });
     } catch (error) {
       console.error("Prisma error:", error);

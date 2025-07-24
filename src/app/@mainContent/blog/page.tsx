@@ -3,6 +3,9 @@ import CategoryItems from "@/components/Blog/CategoryItems";
 import BossLoading from "@/components/BossLoading";
 import Publications from "@/components/Home/Publications";
 import TopDivision from "@/components/TopDivision";
+import { addAllCategory } from "@/store/categorySlice";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import axios from "axios";
 import { useState, useEffect } from "react";
 
 const categoryItems = [
@@ -25,7 +28,12 @@ const categoryItems = [
 
 export default function Blog() {
   const [loading, setLoading] = useState(true);
+  const categoris = useAppSelector((state) => state.categorySlice.data);
+  const dispatch = useAppDispatch();
   useEffect(() => {
+    axios.get("/api/post/category").then((res) => {
+      dispatch(addAllCategory(res.data.allCategory));
+    });
     setLoading(false);
   }, []);
   return (
@@ -35,7 +43,7 @@ export default function Blog() {
       ) : (
         <>
           <TopDivision>
-            <CategoryItems categoryItems={categoryItems} />
+            <CategoryItems categoryItems={categoris} />
           </TopDivision>
           <Publications />
         </>

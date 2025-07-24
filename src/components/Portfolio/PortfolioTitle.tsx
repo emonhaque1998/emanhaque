@@ -27,7 +27,6 @@ export default function PortfolioTitle() {
   useEffect(() => {
     setLoading(true);
     axios.get(`/api/portfolio?page=${page}&limit=${limit}`).then((res) => {
-      console.log(res.data);
       dispatch(addAllPortfolio(res.data.portfolio));
       setMeta(res.data.meta);
       setLoading(false);
