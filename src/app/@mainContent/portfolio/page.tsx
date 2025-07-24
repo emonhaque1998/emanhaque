@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 
 export default function Portfolio() {
   const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     setLoading(false);
   }, []);

@@ -4,22 +4,37 @@ import { AnimatePresence, usePresenceData, wrap } from "motion/react";
 import MainContainer from "@/components/MainContainer";
 import AllPost from "@/components/admin/AllPost";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { addAllPortfolio } from "@/store/portfolioSlice";
+
+type Meta = {
+  page: number;
+  limit: number;
+  totalPages: number;
+  total: number;
+};
 
 export default function AddCategory() {
   const dispatch = useAppDispatch();
   const posts = useAppSelector((state) => state.portfolioSlice.data);
+  const limit = 2;
+  const [page, setPage] = useState(1);
+  const [meta, setMeta] = useState<Meta | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  const setPagehandler = (page: number) => {
+    setPage(page);
+  };
 
   useEffect(() => {
-    const getPost = async () => {
-      const allPost = await axios.get("/api/portfolio?take=10");
-      dispatch(addAllPortfolio(allPost.data));
-    };
-
-    getPost();
-  }, []);
+    axios.get(`/api/portfolio?page=${page}&limit=${limit}`).then((res) => {
+      console.log(res.data);
+      dispatch(addAllPortfolio(res.data.portfolio));
+      setMeta(res.data.meta);
+      setLoading(false);
+    });
+  }, [page]);
   return (
     <>
       <AnimatePresence mode="wait">
@@ -39,7 +54,12 @@ export default function AddCategory() {
               All Blogs
             </h1>
             <div className="w-full">
-              <AllPost posts={posts} />
+              <AllPost
+                posts={posts}
+                page={page}
+                meta={meta}
+                setPage={setPagehandler}
+              />
             </div>
           </MainContainer>
         </motion.div>

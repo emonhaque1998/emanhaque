@@ -1,6 +1,22 @@
 import Image from "next/image";
 
-export default function AllPost({ posts }: { posts?: any[] | null }) {
+type Meta = {
+  page: number;
+  limit: number;
+  totalPages: number;
+  total: number;
+};
+export default function AllPost({
+  posts,
+  page,
+  meta,
+  setPage,
+}: {
+  posts?: any[] | null;
+  page: number;
+  meta: Meta | null;
+  setPage: (page: number) => void;
+}) {
   return (
     <div className="w-full mt-10">
       <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -49,6 +65,37 @@ export default function AllPost({ posts }: { posts?: any[] | null }) {
               })}
           </tbody>
         </table>
+        <div className="mt-6 flex justify-center items-center space-x-2">
+          <button
+            className="px-3 py-1 bg-[#70ba65] dark:bg-black/50 rounded disabled:opacity-50"
+            onClick={() => setPage(page - 1)}
+            disabled={page === 1}
+          >
+            Prev
+          </button>
+
+          {Array.from({ length: meta?.totalPages || 0 }, (_, i) => (
+            <button
+              key={i + 1}
+              className={`px-3 py-1 rounded ${
+                page === i + 1
+                  ? "bg-[#70ba65] dark:bg-black/50 text-white"
+                  : "bg-gray-200/30"
+              }`}
+              onClick={() => setPage(i + 1)}
+            >
+              {i + 1}
+            </button>
+          ))}
+
+          <button
+            className="px-3 py-1 bg-[#70ba65] dark:bg-black/50 rounded disabled:opacity-50"
+            onClick={() => setPage(page + 1)}
+            disabled={page === (meta?.totalPages || 1)}
+          >
+            Next
+          </button>
+        </div>
       </div>
     </div>
   );
