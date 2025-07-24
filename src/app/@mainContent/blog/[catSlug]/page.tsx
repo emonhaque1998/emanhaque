@@ -69,7 +69,7 @@ export default function CatWiseBlog({
               </div>
             </MainContainer>
           </TopDivision>
-          <Publications />
+          <Publications categorySlug={catSlug} />
         </>
       )}
     </>

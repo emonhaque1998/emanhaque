@@ -59,7 +59,9 @@ export default function PublicationsLimited() {
                       >
                         <div className="flex flex-col gap-5 w-full">
                           <div className="">
-                            <Link href={`/blog/${post.slug}`}>
+                            <Link
+                              href={`/blog/${post.category.categorySlug}/${post.slug}`}
+                            >
                               <Image
                                 src={post.image}
                                 width={600}

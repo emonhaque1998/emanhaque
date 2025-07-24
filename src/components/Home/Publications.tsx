@@ -19,21 +19,27 @@ type Meta = {
   total: number;
 };
 
-export default function Publications() {
+export default function Publications({
+  categorySlug,
+}: {
+  categorySlug?: string;
+}) {
   const allPost = useAppSelector((state) => state.postSlice.data);
   const limit = 2;
   const dispatch = useAppDispatch();
   const [page, setPage] = useState(1);
   const [meta, setMeta] = useState<Meta | null>(null);
   const [loading, setLoading] = useState(true);
-
+  const url = `/category-wise-product/${categorySlug}`;
   useEffect(() => {
     setLoading(true);
-    axios.get(`/api/post?page=${page}&limit=${limit}`).then((res) => {
-      dispatch(addAllPost(res.data.posts));
-      setMeta(res.data.meta);
-      setLoading(false);
-    });
+    axios
+      .get(`/api/post${categorySlug ? url : ""}?page=${page}&limit=${limit}`)
+      .then((res) => {
+        dispatch(addAllPost(res.data.posts));
+        setMeta(res.data.meta);
+        setLoading(false);
+      });
   }, [page]);
 
   return (
