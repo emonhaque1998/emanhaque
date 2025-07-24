@@ -1,6 +1,9 @@
+"use client";
 import CategoryItems from "@/components/Blog/CategoryItems";
+import BossLoading from "@/components/BossLoading";
 import Publications from "@/components/Home/Publications";
 import TopDivision from "@/components/TopDivision";
+import { useState, useEffect } from "react";
 
 const categoryItems = [
   {
@@ -21,12 +24,22 @@ const categoryItems = [
 ];
 
 export default function Blog() {
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    setLoading(false);
+  }, []);
   return (
     <>
-      <TopDivision>
-        <CategoryItems categoryItems={categoryItems} />
-      </TopDivision>
-      <Publications />
+      {loading ? (
+        <BossLoading />
+      ) : (
+        <>
+          <TopDivision>
+            <CategoryItems categoryItems={categoryItems} />
+          </TopDivision>
+          <Publications />
+        </>
+      )}
     </>
   );
 }

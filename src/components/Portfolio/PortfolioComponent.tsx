@@ -17,11 +17,9 @@ export default function PortfolioComponent() {
   useEffect(() => {
     setLoading(true);
     const getPortfolio = async () => {
-      const portfolioRes = await axios.get("/api/portfolio?take=10");
       const categoryRes = await axios.get(
         "/api/post/category/have-portfolio-category"
       );
-      dispatch(addAllPortfolio(portfolioRes.data));
       dispatch(addAllCategory(categoryRes.data));
       setLoading(false);
     };
@@ -53,7 +51,7 @@ export default function PortfolioComponent() {
         </div>
       </div>
       <div className="mt-5 grid grid-cols-2 gap-3 max-md:grid-cols-1">
-        {loading ? <Loading /> : <PortfolioTitle portfolios={portfolios} />}
+        {loading ? <Loading /> : <PortfolioTitle />}
       </div>
     </>
   );

@@ -1,50 +1,104 @@
 "use client";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { addAllPortfolio } from "@/store/portfolioSlice";
 import { PortfolioType } from "@/types/allTypes";
+import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaArrowRight } from "react-icons/fa";
 
-export default function PortfolioTitle({
-  portfolios,
-}: {
-  portfolios?: PortfolioType[] | null | undefined;
-}) {
-  const [showPostTitle, setPostTitle] = useState(false);
+type Meta = {
+  page: number;
+  limit: number;
+  totalPages: number;
+  total: number;
+};
 
+export default function PortfolioTitle() {
+  const [showPostTitle, setPostTitle] = useState(false);
+  const portfolios = useAppSelector((state) => state.portfolioSlice.data);
+  const limit = 2;
+  const dispatch = useAppDispatch();
+  const [page, setPage] = useState(1);
+  const [meta, setMeta] = useState<Meta | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    setLoading(true);
+    axios.get(`/api/portfolio?page=${page}&limit=${limit}`).then((res) => {
+      console.log(res.data);
+      dispatch(addAllPortfolio(res.data.portfolio));
+      setMeta(res.data.meta);
+      setLoading(false);
+    });
+  }, [page]);
   return (
     <>
-      {portfolios &&
-        portfolios.map((portfolio, index) => (
-          <Link
-            key={index}
-            href={`/portfolio/${portfolio.category.categorySlug}/${portfolio.slug}`}
-          >
-            <div
-              className="cursor-pointer relative rounded-lg shadow-lg overflow-hidden"
-              onMouseEnter={() => setPostTitle(true)}
-              onMouseLeave={() => setPostTitle(false)}
+      <div className="flex flex-col justify-center">
+        {portfolios &&
+          portfolios.map((portfolio, index) => (
+            <Link
+              key={index}
+              href={`/portfolio/${portfolio.category.categorySlug}/${portfolio.slug}`}
             >
-              <Image
-                src={portfolio.image}
-                alt={portfolio.title}
-                width={500}
-                height={0}
-                className="w-full rounded"
-              />
               <div
-                className={`absolute -bottom-16 ${
-                  showPostTitle ? "bottom-0" : "-bottom-16"
-                } bg-white cursor-pointer rounded-b transition-all dark:bg-[#00283a] w-full items-center flex flex-row justify-between px-5 py-3`}
+                className="cursor-pointer relative rounded-lg shadow-lg overflow-hidden"
+                onMouseEnter={() => setPostTitle(true)}
+                onMouseLeave={() => setPostTitle(false)}
               >
-                <h1 className="text-lg font-medium">{portfolio.title}</h1>
-                <div className="w-10 h-10 rounded-full bg-[#00283a] dark:bg-white flex flex-row items-center justify-center">
-                  <FaArrowRight className="text-white dark:text-[#70ba65]" />
+                <Image
+                  src={portfolio.image}
+                  alt={portfolio.title}
+                  width={500}
+                  height={0}
+                  className="w-full rounded"
+                />
+                <div
+                  className={`absolute -bottom-16 ${
+                    showPostTitle ? "bottom-0" : "-bottom-16"
+                  } bg-white cursor-pointer rounded-b transition-all dark:bg-[#00283a] w-full items-center flex flex-row justify-between px-5 py-3`}
+                >
+                  <h1 className="text-lg font-medium">{portfolio.title}</h1>
+                  <div className="w-10 h-10 rounded-full bg-[#00283a] dark:bg-white flex flex-row items-center justify-center">
+                    <FaArrowRight className="text-white dark:text-[#70ba65]" />
+                  </div>
                 </div>
               </div>
-            </div>
-          </Link>
-        ))}
+            </Link>
+          ))}
+        <div className="mt-6 flex justify-center items-center space-x-2">
+          <button
+            className="px-3 py-1 bg-[#70ba65] dark:bg-black/50 rounded disabled:opacity-50"
+            onClick={() => setPage(page - 1)}
+            disabled={page === 1}
+          >
+            Prev
+          </button>
+
+          {Array.from({ length: meta?.totalPages || 0 }, (_, i) => (
+            <button
+              key={i + 1}
+              className={`px-3 py-1 rounded ${
+                page === i + 1
+                  ? "bg-[#70ba65] dark:bg-black/50 text-white"
+                  : "bg-gray-200/30"
+              }`}
+              onClick={() => setPage(i + 1)}
+            >
+              {i + 1}
+            </button>
+          ))}
+
+          <button
+            className="px-3 py-1 bg-[#70ba65] dark:bg-black/50 rounded disabled:opacity-50"
+            onClick={() => setPage(page + 1)}
+            disabled={page === (meta?.totalPages || 1)}
+          >
+            Next
+          </button>
+        </div>
+      </div>
     </>
   );
 }
