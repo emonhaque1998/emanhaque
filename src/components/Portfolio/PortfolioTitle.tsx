@@ -5,7 +5,7 @@ import { PortfolioType } from "@/types/allTypes";
 import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { FaArrowRight } from "react-icons/fa";
 
 type Meta = {
@@ -16,13 +16,22 @@ type Meta = {
 };
 
 export default function PortfolioTitle() {
-  const [showPostTitle, setPostTitle] = useState(false);
   const portfolios = useAppSelector((state) => state.portfolioSlice.data);
   const limit = 2;
   const dispatch = useAppDispatch();
   const [page, setPage] = useState(1);
   const [meta, setMeta] = useState<Meta | null>(null);
   const [loading, setLoading] = useState(true);
+
+  const handleMouseEnter = (event: React.MouseEvent<HTMLDivElement>) => {
+    event.currentTarget.children[1].classList.remove("-bottom-16");
+    event.currentTarget.children[1].classList.add("bottom-0");
+  };
+
+  const handleMouseLeave = (event: React.MouseEvent<HTMLDivElement>) => {
+    event.currentTarget.children[1].classList.remove("bottom-0");
+    event.currentTarget.children[1].classList.add("-bottom-16");
+  };
 
   useEffect(() => {
     setLoading(true);
@@ -43,8 +52,8 @@ export default function PortfolioTitle() {
             >
               <div
                 className="cursor-pointer relative rounded-lg shadow-lg overflow-hidden"
-                onMouseEnter={() => setPostTitle(true)}
-                onMouseLeave={() => setPostTitle(false)}
+                onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}
               >
                 <Image
                   src={portfolio.image}
@@ -54,9 +63,7 @@ export default function PortfolioTitle() {
                   className="w-full rounded"
                 />
                 <div
-                  className={`absolute -bottom-16 ${
-                    showPostTitle ? "bottom-0" : "-bottom-16"
-                  } bg-white cursor-pointer rounded-b transition-all dark:bg-[#00283a] w-full items-center flex flex-row justify-between px-5 py-3`}
+                  className={`absolute -bottom-16 transition-all bg-white dark:bg-[#00283a] cursor-pointer rounded-b w-full items-center flex justify-between px-5 py-3`}
                 >
                   <h1 className="text-lg font-medium">{portfolio.title}</h1>
                   <div className="w-10 h-10 rounded-full bg-[#00283a] dark:bg-white flex flex-row items-center justify-center">
