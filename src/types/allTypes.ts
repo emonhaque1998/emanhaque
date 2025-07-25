@@ -1,3 +1,5 @@
+import { Interface } from "readline";
+
 export interface UserType {
   id: string;
   email: string;
@@ -72,4 +74,11 @@ export interface ServiceType {
   shortDescription: string;
   category?: CategoryType;
   createdAt: Date;
+}
+
+export interface Meta {
+  page: number;
+  limit: number;
+  totalPages: number;
+  total: number;
 }

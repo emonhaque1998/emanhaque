@@ -25,3 +25,25 @@ export async function GET(
     return NextResponse.json({ error: "Database error" }, { status: 500 });
   }
 }
+
+export async function DELETE(
+  req: NextRequest,
+  { params }: { params: Promise<{ portSlug: string }> }
+) {
+  const id = (await params).portSlug;
+
+  try {
+    const post = await prisma.portfolio.delete({
+      where: {
+        id,
+      },
+    });
+    return NextResponse.json(
+      { success: true, msg: "Portfolio Deleted" },
+      { status: 200 }
+    );
+  } catch (error) {
+    console.error("Prisma error:", error);
+    return NextResponse.json({ error: "Database error" }, { status: 500 });
+  }
+}
