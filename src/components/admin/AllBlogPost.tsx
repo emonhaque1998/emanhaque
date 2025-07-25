@@ -1,4 +1,4 @@
-import { Meta, PortfolioType } from "@/types/allTypes";
+import { Meta, PortfolioType, PostType } from "@/types/allTypes";
 import Image from "next/image";
 import EditDelete from "./EditDelete";
 import axios from "axios";
@@ -6,7 +6,7 @@ import toast from "react-hot-toast";
 import { get } from "http";
 import SmallLoading from "../loading/SmallLoading";
 
-export default function AllPost({
+export default function AllBlogPost({
   posts,
   page,
   meta,
@@ -15,7 +15,7 @@ export default function AllPost({
   loading,
   setLoadingAction,
 }: {
-  posts?: PortfolioType[] | null;
+  posts?: PostType[] | null;
   page: number;
   meta: Meta | null;
   setPage: (page: number) => void;

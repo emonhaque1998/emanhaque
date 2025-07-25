@@ -7,6 +7,7 @@ import axios from "axios";
 import { addAllPost } from "@/store/postSlice";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { useEffect, useState } from "react";
+import AllBlogPost from "@/components/admin/AllBlogPost";
 
 type Meta = {
   page: number;
@@ -22,20 +23,33 @@ export default function AddCategory() {
   const [page, setPage] = useState(1);
   const [meta, setMeta] = useState<Meta | null>(null);
   const [loading, setLoading] = useState(true);
+  const [SmallLoading, setSmallLoading] = useState(false);
+
+  const setLoadingHandler = (loading: boolean) => {
+    setSmallLoading(loading);
+  };
 
   const setPagehandler = (page: number) => {
     setPage(page);
   };
 
-  console.log(page);
-
-  useEffect(() => {
+  const getAllBlogs = () => {
+    setSmallLoading(true);
     axios.get(`/api/post?page=${page}&limit=${limit}`).then((res) => {
       dispatch(addAllPost(res.data.posts));
       setMeta(res.data.meta);
       setLoading(false);
+      setSmallLoading(false);
     });
+  };
+
+  useEffect(() => {
+    getAllBlogs();
   }, [page]);
+
+  const getData = () => {
+    getAllBlogs();
+  };
   return (
     <>
       <AnimatePresence mode="wait">
@@ -55,11 +69,14 @@ export default function AddCategory() {
               All Blogs
             </h1>
             <div className="w-full">
-              <AllPost
+              <AllBlogPost
                 posts={posts}
                 page={page}
                 meta={meta}
                 setPage={setPagehandler}
+                getData={getData}
+                loading={SmallLoading}
+                setLoadingAction={setLoadingHandler}
               />
             </div>
           </MainContainer>
